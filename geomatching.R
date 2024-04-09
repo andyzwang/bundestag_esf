@@ -20,7 +20,7 @@ plz <- st_read("raw_data/shape_files/plz5.geojson")
 wk_namen <- read.csv("raw_data/wahlkreisnamen.csv", skip = 7) %>%
   select(-LAND_NR, -LAND_ABK)
 
-# bwk data from https://www.bundeswahlleiterin.de/en/bundestagswahlen/2017/wahlkreiseinteilung/downloads.html
+# bwk data from https://www.bundeswahlleiterin.de/en/bundestagswahlen/2021/wahlkreiseinteilung/downloads.html
 # converted using https://www.shptogeojson.com/
 bwk <- st_read("raw_data/shape_files/wkr.json")
 
@@ -130,7 +130,7 @@ partial_matches <- partial_matches %>%
     plz_name = str_replace(plz_name, "  ", " ")
   )
 
-# 95 PLZ have multiple WK associated with them
+# 94 PLZ have multiple WK associated with them
 repeat_num <- partial_matches[c("plz", "wkr_nr")] %>%
   group_by(plz) %>%
   summarize(count = n()) %>%

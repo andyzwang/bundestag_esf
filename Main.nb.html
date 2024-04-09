@@ -1766,120 +1766,27 @@ Commission</a>].</p>
 <h2>Project Description</h2>
 <p>The goal of this project is to collate individual ESF+ projects into
 German electoral districts, and to standardize formatting between the
-various data sources from each federal state (<em>Bundesland</em>).</p>
+various data sources from the 12 federal states
+(<em>Bundesländer</em>).</p>
 </div>
 <div id="electoral-districts" class="section level2">
 <h2>Electoral Districts</h2>
-<!-- rnb-text-end -->
-<!-- rnb-text-begin -->
-<p>Using data from the Federal Statistical Institute, we create a
-mapping from <em>Postleitzahl</em> (PLZ) to <em>Bundestagwahlkreis</em>
-(BWK). We similarly create a mapping from BWK to PLZ.</p>
-<table>
-<caption>First 5 Rows of PLZ-ordered electoral districts</caption>
-<colgroup>
-<col width="6%" />
-<col width="13%" />
-<col width="9%" />
-<col width="12%" />
-<col width="5%" />
-<col width="17%" />
-<col width="3%" />
-<col width="6%" />
-<col width="10%" />
-<col width="10%" />
-<col width="4%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">postleitzahl</th>
-<th align="left">ars</th>
-<th align="left">ags</th>
-<th align="left">gemeinde</th>
-<th align="left">bwk_nummer</th>
-<th align="left">bwk_name</th>
-<th align="right">flache</th>
-<th align="right">bevolkerung</th>
-<th align="right">bevolkerung_mannlich</th>
-<th align="right">bevolkerung_weiblich</th>
-<th align="left">mult_wk</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">01067</td>
-<td align="left">146120000000</td>
-<td align="left">14612000</td>
-<td align="left">Dresden, Stadt</td>
-<td align="left">160, 159</td>
-<td align="left">Dresden II - Bautzen II, Dresden I</td>
-<td align="right">656.96</td>
-<td align="right">1113560</td>
-<td align="right">555224</td>
-<td align="right">558336</td>
-<td align="left">TRUE</td>
-</tr>
-<tr class="even">
-<td align="left">01445</td>
-<td align="left">146270210210</td>
-<td align="left">14627210</td>
-<td align="left">Radebeul, Stadt</td>
-<td align="left">155</td>
-<td align="left">Meißen</td>
-<td align="right">26.14</td>
-<td align="right">33894</td>
-<td align="right">16363</td>
-<td align="right">17531</td>
-<td align="left">FALSE</td>
-</tr>
-<tr class="odd">
-<td align="left">01454</td>
-<td align="left">146250480480, 146250600600</td>
-<td align="left">14625480, 14625600</td>
-<td align="left">Radeberg, Stadt, Wachau</td>
-<td align="left">160</td>
-<td align="left">Dresden II - Bautzen II</td>
-<td align="right">67.94</td>
-<td align="right">22838</td>
-<td align="right">11237</td>
-<td align="right">11601</td>
-<td align="left">FALSE</td>
-</tr>
-<tr class="even">
-<td align="left">01458</td>
-<td align="left">146250430430</td>
-<td align="left">14625430</td>
-<td align="left">Ottendorf-Okrilla</td>
-<td align="left">160</td>
-<td align="left">Dresden II - Bautzen II</td>
-<td align="right">25.93</td>
-<td align="right">9980</td>
-<td align="right">5021</td>
-<td align="right">4959</td>
-<td align="left">FALSE</td>
-</tr>
-<tr class="odd">
-<td align="left">01468</td>
-<td align="left">146270150150</td>
-<td align="left">14627150</td>
-<td align="left">Moritzburg</td>
-<td align="left">155</td>
-<td align="left">Meißen</td>
-<td align="right">46.49</td>
-<td align="right">8326</td>
-<td align="right">4122</td>
-<td align="right">4204</td>
-<td align="left">FALSE</td>
-</tr>
-</tbody>
-</table>
-<p>It is expected that BWKs encompass multiple PLZ, with the average BWK
-corresponding to 21.735786 districts. However, 88 PLZ correspond to
-multiple BWK, with the most extreme being PLZ 10178 in Berlin, which
-corresponds to 12 electoral districts. As such, matching ESP projects on
-PLZ will lead to a certain margin of error, and the column
-<code>mult_wk</code> is set to <code>TRUE</code> for PLZ that have
-multiple BWK.</p>
+<p>See <code>geomatching.R</code> for the process of creating a bridge
+between the German postal codes (<em>Postleitzahlen</em>, PLZ) and
+Bundestag electoral districts (<em>Bundestagswahlkreise</em>, or BWK).
+The 299 electoral districts correspond to ~8,200 PLZ, with approximately
+100 PLZ being located in more than one electoral district.</p>
+<p>This data does not exist publicly (<a href="https://fragdenstaat.de/anfrage/veroffentlichung-einer-vollstandigen-liste-von-postleitzahlen-und-den-zugehorigen-wahlkreisen/">see
+here</a>) and was collated through dual-mapping publicly-available JSON
+mapping files.</p>
+<ul>
+<li>PLZ Data [<a href="https://www.suche-postleitzahl.org/downloads">Postleitzahlen
+Deutschland</a>, Updated 15.07.2023, <a href="https://www.openstreetmap.org/copyright">Open Database
+License</a>]</li>
+<li>Constituency Data [<a href="https://www.bundeswahlleiterin.de/en/bundestagswahlen/2021/wahlkreiseinteilung/downloads.html">The
+Federal Returning Officer</a>, © Der Bundeswahlleiter, Statistisches
+Bundesamt, Wiesbaden 2020]</li>
+</ul>
 </div>
 <div id="north-rhine-westphalia" class="section level2">
 <h2>North Rhine Westphalia</h2>
@@ -1888,7 +1795,7 @@ multiple BWK.</p>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiRVNGIFByb2plY3RzIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZSA9IEZBTFNFfQoKa25pdHI6Om9wdHNfY2h1bmskc2V0KGluY2x1ZGUgPSBGLCByb3dzLnByaW50PTUpCmxpYnJhcnkoZ2dwbG90MikKbGlicmFyeSh0aWR5dmVyc2UpCmBgYAoKVGhlIEV1cm9wZWFuIFNvY2lhbCBGdW5kIFBsdXMgKEVTRispIGlzIHRoZSBFdXJvcGVhbiBVbmlvbiAoRVUp4oCZcyBtYWluIGluc3RydW1lbnQgZm9yIGludmVzdGluZyBpbiBwZW9wbGUgYW5kIHN1cHBvcnRpbmcgdGhlIGltcGxlbWVudGF0aW9uIG9mIHRoZSBFdXJvcGVhbiBQaWxsYXIgb2YgU29jaWFsIFJpZ2h0cy4gV2l0aCBhIGJ1ZGdldCBvZiDigqwxNDIuNyBiaWxsaW9uIGZvciB0aGUgcGVyaW9kIDIwMjEtMjAyNywgdGhlIEVTRisgd2lsbCBjb250aW51ZSB0byBwcm92aWRlIGFuIGltcG9ydGFudCBjb250cmlidXRpb24gdG8gdGhlIEVV4oCZcyBlbXBsb3ltZW50LCBzb2NpYWwsIGVkdWNhdGlvbiBhbmQgc2tpbGxzIHBvbGljaWVzLCBpbmNsdWRpbmcgc3RydWN0dXJhbCByZWZvcm1zIGluIHRoZXNlIGFyZWFzIFtbRXVyb3BlYW4gQ29tbWlzc2lvbl0oaHR0cHM6Ly9ldXJvcGVhbi1zb2NpYWwtZnVuZC1wbHVzLmVjLmV1cm9wYS5ldS9lbi93aGF0LWVzZildLgoKIyMgUHJvamVjdCBEZXNjcmlwdGlvbgoKVGhlIGdvYWwgb2YgdGhpcyBwcm9qZWN0IGlzIHRvIGNvbGxhdGUgaW5kaXZpZHVhbCBFU0YrIHByb2plY3RzIGludG8gR2VybWFuIGVsZWN0b3JhbCBkaXN0cmljdHMsIGFuZCB0byBzdGFuZGFyZGl6ZSBmb3JtYXR0aW5nIGJldHdlZW4gdGhlIHZhcmlvdXMgZGF0YSBzb3VyY2VzIGZyb20gZWFjaCBmZWRlcmFsIHN0YXRlICgqQnVuZGVzbGFuZCopLiAKCiMjIEVsZWN0b3JhbCBEaXN0cmljdHMKCmBgYHtyIGVsZWN0b3JhbF9kaXN0cmljdHMsIGluY2x1ZGUgPSBGQUxTRX0KCiMgRWxlY3RvcmFsIGRpc3RyaWN0IGRhdGEgZm9yIDIwLiBlbGVjdGlvbiBwZXJpb2QgZnJvbSBmZWRlcmFsIHN0YXRpc3RpY2FsCiMgb2ZmaWNlLCBhcyBvZiA0dGggcXVhcnRlciAyMDIwIAoKZWxlY3RvcmFsX3hsX25hbWVzIDwtIGMoCiAgIkFSUyIsCiAgIkFHUyIsCiAgIkdlbWVpbmRlIiwKICAiQldLIE51bW1lciIsCiAgIkJXSyBOYW1lIiwKICAiUG9zdGxlaXR6YWhsIiwKICAiRmzDpGNoZSIsCiAgIkJldsO2bGtlcnVuZyIsCiAgIkJldsO2bGtlcnVuZyBNw6RubmxpY2giLAogICJCZXbDtmxrZXJ1bmcgV2VpYmxpY2giCikKCmxpYnJhcnkocmVhZHhsKQpsaWJyYXJ5KGphbml0b3IpCmxpYnJhcnkoc3RyaW5ncikKd2FobGtyZWlzIDwtIHJlYWRfeGxzKCJkYXRhL3dhaGxrcmVpcy9XYWhsa3JlaXNlLnhscyIsIHNoZWV0ID0gMiwgc2tpcCA9IDUsIAogICAgICAgICAgICAgICAgICAgICAgY29sX25hbWVzID0gZWxlY3RvcmFsX3hsX25hbWVzKSAlPiUKICBjbGVhbl9uYW1lcygpICU+JQogIHNlbGVjdChwb3N0bGVpdHphaGwsIGV2ZXJ5dGhpbmcoKSkgJT4lCiAgZmlsdGVyKCFpcy5uYShwb3N0bGVpdHphaGwpKQoKIyB3YWhsa3JlaXNfcGx6IG9yZ2FuaXplcyBieSBwb3N0IGNvZGUKCndhaGxrcmVpc19wbHogPC0gd2FobGtyZWlzICU+JQogIGdyb3VwX2J5KHBvc3RsZWl0emFobCkgJT4lCiAgc3VtbWFyaXplKAogICAgYXJzID0gbGlzdCh1bmlxdWUoYXJzKSksCiAgICBhZ3MgPSBsaXN0KHVuaXF1ZShhZ3MpKSwKICAgIGdlbWVpbmRlID0gbGlzdCh1bmlxdWUoZ2VtZWluZGUpKSwKICAgIGJ3a19udW1tZXIgPSBsaXN0KHVuaXF1ZShid2tfbnVtbWVyKSksCiAgICBid2tfbmFtZSA9IGxpc3QodW5pcXVlKGJ3a19uYW1lKSksCiAgICBmbGFjaGUgPSBzdW0oZmxhY2hlKSwKICAgIGJldm9sa2VydW5nID0gc3VtKGJldm9sa2VydW5nKSwKICAgIGJldm9sa2VydW5nX21hbm5saWNoID0gc3VtKGJldm9sa2VydW5nX21hbm5saWNoKSwKICAgIGJldm9sa2VydW5nX3dlaWJsaWNoID0gc3VtKGJldm9sa2VydW5nX3dlaWJsaWNoKQogICkgJT4lCiAgbXV0YXRlKAogICAgbXVsdF93ayA9IGlmX2Vsc2UoCiAgICAgIGxlbmd0aHMoYndrX251bW1lcikgPiAxLCBUUlVFLCBGQUxTRQogICAgKQogICkKCndhaGxrcmVpc193ayA8LSB3YWhsa3JlaXMgJT4lCiAgZ3JvdXBfYnkoYndrX251bW1lcikgJT4lCiAgc3VtbWFyaXplKAogICAgYndrX25hbWUgPSBsaXN0KHVuaXF1ZShid2tfbmFtZSkpLAogICAgcG9zdGxlaXR6YWhsID0gbGlzdCh1bmlxdWUocG9zdGxlaXR6YWhsKSksCiAgICBhcnMgPSBsaXN0KHVuaXF1ZShhcnMpKSwKICAgIGFncyA9IGxpc3QodW5pcXVlKGFncykpLAogICAgZ2VtZWluZGUgPSBsaXN0KHVuaXF1ZShnZW1laW5kZSkpLAogICAgZmxhY2hlID0gc3VtKGZsYWNoZSksCiAgICBiZXZvbGtlcnVuZyA9IHN1bShiZXZvbGtlcnVuZyksCiAgICBiZXZvbGtlcnVuZ19tYW5ubGljaCA9IHN1bShiZXZvbGtlcnVuZ19tYW5ubGljaCksCiAgICBiZXZvbGtlcnVuZ193ZWlibGljaCA9IHN1bShiZXZvbGtlcnVuZ193ZWlibGljaCkKICApCgp3a19wbHpfbnVtYmVyIDwtIHdhaGxrcmVpc193ayAlPiUKICBtdXRhdGUoCiAgICBwbHpfbnVtID0gbGVuZ3Rocyhwb3N0bGVpdHphaGwpCiAgKSAlPiUKICBzdW1tYXJpemUoYXZnX3BseiA9IG1lYW4ocGx6X251bSkpCgpwbHpfbXVsdGlwbGVfd2sgPC0gd2FobGtyZWlzX3BseiAlPiUKICBmaWx0ZXIobXVsdF93ayA9PSBUUlVFKSAlPiUKICBzdW1tYXJpemUoYyA9IG4oKSkKCndhaGxrcmVpc19wbHpfbWVyZ2UgPC0gd2FobGtyZWlzX3BseiAlPiUKICBzZWxlY3QocG9zdGxlaXR6YWhsLCBid2tfbnVtbWVyLCBid2tfbmFtZSwgbXVsdF93aykgJT4lCiAgcmVuYW1lKHBseiA9IHBvc3RsZWl0emFobCkKYGBgCgpVc2luZyBkYXRhIGZyb20gdGhlIEZlZGVyYWwgU3RhdGlzdGljYWwgSW5zdGl0dXRlLCB3ZSBjcmVhdGUgYSBtYXBwaW5nIGZyb20gKlBvc3RsZWl0emFobCogKFBMWikgdG8gKkJ1bmRlc3RhZ3dhaGxrcmVpcyogKEJXSykuIFdlIHNpbWlsYXJseSBjcmVhdGUgYSBtYXBwaW5nIGZyb20gQldLIHRvIFBMWi4gCgpgciBrbml0cjo6a2FibGUod2FobGtyZWlzX3BselsxOjUsIF0sIGNhcHRpb24gPSAiRmlyc3QgNSBSb3dzIG9mIFBMWi1vcmRlcmVkIGVsZWN0b3JhbCBkaXN0cmljdHMiKWAKCkl0IGlzIGV4cGVjdGVkIHRoYXQgQldLcyBlbmNvbXBhc3MgbXVsdGlwbGUgUExaLCB3aXRoIHRoZSBhdmVyYWdlIEJXSyBjb3JyZXNwb25kaW5nIHRvIGByIHB1bGwoIHdrX3Bsel9udW1iZXIpYCBkaXN0cmljdHMuIEhvd2V2ZXIsIGByIHB1bGwocGx6X211bHRpcGxlX3drKWAgUExaIGNvcnJlc3BvbmQgdG8gbXVsdGlwbGUgQldLLCB3aXRoIHRoZSBtb3N0IGV4dHJlbWUgYmVpbmcgUExaIDEwMTc4IGluIEJlcmxpbiwgd2hpY2ggY29ycmVzcG9uZHMgdG8gMTIgZWxlY3RvcmFsIGRpc3RyaWN0cy4gQXMgc3VjaCwgbWF0Y2hpbmcgRVNQIHByb2plY3RzIG9uIFBMWiB3aWxsIGxlYWQgdG8gYSBjZXJ0YWluIG1hcmdpbiBvZiBlcnJvciwgYW5kIHRoZSBjb2x1bW4gYG11bHRfd2tgIGlzIHNldCB0byBgVFJVRWAgZm9yIFBMWiB0aGF0IGhhdmUgbXVsdGlwbGUgQldLLiAKCiMjIE5vcnRoIFJoaW5lIFdlc3RwaGFsaWEKCmBgYHtyIG5ydywgZWNobz1GQUxTRX0KCm5yd19jb2xfdHlwZXMgPSBjKAogICJ0ZXh0IiwKICAidGV4dCIsCiAgInRleHQiLAogICJkYXRlIiwKICAiZGF0ZSIsCiAgIm51bWVyaWMiLAogICJ0ZXh0IiwKICAidGV4dCIsCiAgInRleHQiLAogICJ0ZXh0IiwKICAidGV4dCIsCiAgInRleHQiLAogICJudW1lcmljIiwKICAibnVtZXJpYyIKKQoKbnJ3IDwtIHJlYWRfeGxzeCgiZGF0YS9idW5kZXNsYWVuZGVyL05SVy54bHN4Iiwgc2tpcCA9IDEsIGNvbF90eXBlcyA9IG5yd19jb2xfdHlwZXMpICU+JQogIGNsZWFuX25hbWVzKCkgJT4lCiAgcmVuYW1lKAogICAgb3BlcmF0aW9uID0gb3BlcmF0aW9uX25hbWUsCiAgICBwdXJwb3NlID0gcHVycG9zZV9hbmRfZXhwZWN0ZWRfYWNoaWV2ZW1lbnRzLAogICAgY29zdCA9IHRvdGFsX2Nvc3QsCiAgICBvYmplY3RpdmUgPSBzcGVjaWZpY19vYmplY3RpdmUsCiAgICBldV9jb2ZpbmFuY2luZyA9IHVuaW9uX2NvX2ZpbmFuY2luZ19yYXRlLAogICAgcGx6ID0gbG9jYXRpb25faW5kaWNhdG9yX3Bvc3RhbF9jb2RlLAogICAgY2l0eSA9IGxvY2F0aW9uX2luZGljYXRvcl9sb2NhdGlvbiwKICAgIGludGVydmVudGlvbl90eXBlID0gaW50ZXJ2ZW5fdGlvbl90eXBlIAogICkgJT4lCiAgbXV0YXRlKAogICAgcGx6ID0gc3RyX3JlcGxhY2VfYWxsKHBseiwiICIsICIiKQogICkKCm5ydyA8LSBucndbLWMoMSwyKSwgXQoKbnJ3X3drIDwtIG5ydyAlPiUKICBsZWZ0X2pvaW4od2FobGtyZWlzX3Bsel9tZXJnZSwgam9pbl9ieShwbHopKQpgYGAKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiRVNGIFByb2plY3RzIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZSA9IEZBTFNFfQoKa25pdHI6Om9wdHNfY2h1bmskc2V0KGluY2x1ZGUgPSBGLCByb3dzLnByaW50PTUpCmxpYnJhcnkoZ2dwbG90MikKbGlicmFyeSh0aWR5dmVyc2UpCmBgYAoKVGhlIEV1cm9wZWFuIFNvY2lhbCBGdW5kIFBsdXMgKEVTRispIGlzIHRoZSBFdXJvcGVhbiBVbmlvbiAoRVUp4oCZcyBtYWluIGluc3RydW1lbnQgZm9yIGludmVzdGluZyBpbiBwZW9wbGUgYW5kIHN1cHBvcnRpbmcgdGhlIGltcGxlbWVudGF0aW9uIG9mIHRoZSBFdXJvcGVhbiBQaWxsYXIgb2YgU29jaWFsIFJpZ2h0cy4gV2l0aCBhIGJ1ZGdldCBvZiDigqwxNDIuNyBiaWxsaW9uIGZvciB0aGUgcGVyaW9kIDIwMjEtMjAyNywgdGhlIEVTRisgd2lsbCBjb250aW51ZSB0byBwcm92aWRlIGFuIGltcG9ydGFudCBjb250cmlidXRpb24gdG8gdGhlIEVV4oCZcyBlbXBsb3ltZW50LCBzb2NpYWwsIGVkdWNhdGlvbiBhbmQgc2tpbGxzIHBvbGljaWVzLCBpbmNsdWRpbmcgc3RydWN0dXJhbCByZWZvcm1zIGluIHRoZXNlIGFyZWFzIFtbRXVyb3BlYW4gQ29tbWlzc2lvbl0oaHR0cHM6Ly9ldXJvcGVhbi1zb2NpYWwtZnVuZC1wbHVzLmVjLmV1cm9wYS5ldS9lbi93aGF0LWVzZildLgoKIyMgUHJvamVjdCBEZXNjcmlwdGlvbgoKVGhlIGdvYWwgb2YgdGhpcyBwcm9qZWN0IGlzIHRvIGNvbGxhdGUgaW5kaXZpZHVhbCBFU0YrIHByb2plY3RzIGludG8gR2VybWFuIGVsZWN0b3JhbCBkaXN0cmljdHMsIGFuZCB0byBzdGFuZGFyZGl6ZSBmb3JtYXR0aW5nIGJldHdlZW4gdGhlIHZhcmlvdXMgZGF0YSBzb3VyY2VzIGZyb20gdGhlIDEyIGZlZGVyYWwgc3RhdGVzICgqQnVuZGVzbMOkbmRlciopLiAKCiMjIEVsZWN0b3JhbCBEaXN0cmljdHMKClNlZSBgZ2VvbWF0Y2hpbmcuUmAgZm9yIHRoZSBwcm9jZXNzIG9mIGNyZWF0aW5nIGEgYnJpZGdlIGJldHdlZW4gdGhlIEdlcm1hbiBwb3N0YWwgY29kZXMgKCpQb3N0bGVpdHphaGxlbiosIFBMWikgYW5kIEJ1bmRlc3RhZyBlbGVjdG9yYWwgZGlzdHJpY3RzICgqQnVuZGVzdGFnc3dhaGxrcmVpc2UqLCBvciBCV0spLiBUaGUgMjk5IGVsZWN0b3JhbCBkaXN0cmljdHMgY29ycmVzcG9uZCB0byB+OCwyMDAgUExaLCB3aXRoIGFwcHJveGltYXRlbHkgMTAwIFBMWiBiZWluZyBsb2NhdGVkIGluIG1vcmUgdGhhbiBvbmUgZWxlY3RvcmFsIGRpc3RyaWN0LiAKClRoaXMgZGF0YSBkb2VzIG5vdCBleGlzdCBwdWJsaWNseSAoW3NlZSBoZXJlXShodHRwczovL2ZyYWdkZW5zdGFhdC5kZS9hbmZyYWdlL3Zlcm9mZmVudGxpY2h1bmctZWluZXItdm9sbHN0YW5kaWdlbi1saXN0ZS12b24tcG9zdGxlaXR6YWhsZW4tdW5kLWRlbi16dWdlaG9yaWdlbi13YWhsa3JlaXNlbi8pKSBhbmQgd2FzIGNvbGxhdGVkIHRocm91Z2ggZHVhbC1tYXBwaW5nIHB1YmxpY2x5LWF2YWlsYWJsZSBKU09OIG1hcHBpbmcgZmlsZXMuCgoqIFBMWiBEYXRhIFtbUG9zdGxlaXR6YWhsZW4gRGV1dHNjaGxhbmRdKGh0dHBzOi8vd3d3LnN1Y2hlLXBvc3RsZWl0emFobC5vcmcvZG93bmxvYWRzKSwgVXBkYXRlZCAxNS4wNy4yMDIzLCBbT3BlbiBEYXRhYmFzZSBMaWNlbnNlXShodHRwczovL3d3dy5vcGVuc3RyZWV0bWFwLm9yZy9jb3B5cmlnaHQpXQoqIENvbnN0aXR1ZW5jeSBEYXRhIFtbVGhlIEZlZGVyYWwgUmV0dXJuaW5nIE9mZmljZXJdKGh0dHBzOi8vd3d3LmJ1bmRlc3dhaGxsZWl0ZXJpbi5kZS9lbi9idW5kZXN0YWdzd2FobGVuLzIwMjEvd2FobGtyZWlzZWludGVpbHVuZy9kb3dubG9hZHMuaHRtbCksIMKpIERlciBCdW5kZXN3YWhsbGVpdGVyLCBTdGF0aXN0aXNjaGVzIEJ1bmRlc2FtdCwgV2llc2JhZGVuIDIwMjBdCgojIyBOb3J0aCBSaGluZSBXZXN0cGhhbGlhCgpgYGB7ciBucncsIGVjaG89RkFMU0V9CgpucndfY29sX3R5cGVzID0gYygKICAidGV4dCIsCiAgInRleHQiLAogICJ0ZXh0IiwKICAiZGF0ZSIsCiAgImRhdGUiLAogICJudW1lcmljIiwKICAidGV4dCIsCiAgInRleHQiLAogICJ0ZXh0IiwKICAidGV4dCIsCiAgInRleHQiLAogICJ0ZXh0IiwKICAibnVtZXJpYyIsCiAgIm51bWVyaWMiCikKCm5ydyA8LSByZWFkX3hsc3goImRhdGEvYnVuZGVzbGFlbmRlci9OUlcueGxzeCIsIHNraXAgPSAxLCBjb2xfdHlwZXMgPSBucndfY29sX3R5cGVzKSAlPiUKICBjbGVhbl9uYW1lcygpICU+JQogIHJlbmFtZSgKICAgIG9wZXJhdGlvbiA9IG9wZXJhdGlvbl9uYW1lLAogICAgcHVycG9zZSA9IHB1cnBvc2VfYW5kX2V4cGVjdGVkX2FjaGlldmVtZW50cywKICAgIGNvc3QgPSB0b3RhbF9jb3N0LAogICAgb2JqZWN0aXZlID0gc3BlY2lmaWNfb2JqZWN0aXZlLAogICAgZXVfY29maW5hbmNpbmcgPSB1bmlvbl9jb19maW5hbmNpbmdfcmF0ZSwKICAgIHBseiA9IGxvY2F0aW9uX2luZGljYXRvcl9wb3N0YWxfY29kZSwKICAgIGNpdHkgPSBsb2NhdGlvbl9pbmRpY2F0b3JfbG9jYXRpb24sCiAgICBpbnRlcnZlbnRpb25fdHlwZSA9IGludGVydmVuX3Rpb25fdHlwZSAKICApICU+JQogIG11dGF0ZSgKICAgIHBseiA9IHN0cl9yZXBsYWNlX2FsbChwbHosIiAiLCAiIikKICApCgpucncgPC0gbnJ3Wy1jKDEsMiksIF0KCm5yd193ayA8LSBucncgJT4lCiAgbGVmdF9qb2luKHdhaGxrcmVpc19wbHpfbWVyZ2UsIGpvaW5fYnkocGx6KSkKYGBgCgo=</div>
 
 
 
