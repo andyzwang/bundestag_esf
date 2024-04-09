@@ -14,7 +14,7 @@ The European Social Fund Plus (ESF+) is the European Union (EU)’s main instrum
 
 ## Project Description
 
-The goal of this project is to collate individual ESF+ projects into German electoral districts, and to standardize formatting between the various data sources from each individual federal state (*Bundesland*). 
+The goal of this project is to collate individual ESF+ projects into German electoral districts, and to standardize formatting between the various data sources from each federal state (*Bundesland*). 
 
 ## Electoral Districts
 
@@ -38,6 +38,7 @@ electoral_xl_names <- c(
 
 library(readxl)
 library(janitor)
+library(stringr)
 wahlkreis <- read_xls("data/wahlkreis/Wahlkreise.xls", sheet = 2, skip = 5, 
                       col_names = electoral_xl_names) %>%
   clean_names() %>%
@@ -89,12 +90,57 @@ plz_multiple_wk <- wahlkreis_plz %>%
   filter(mult_wk == TRUE) %>%
   summarize(c = n())
 
+wahlkreis_plz_merge <- wahlkreis_plz %>%
+  select(postleitzahl, bwk_nummer, bwk_name, mult_wk) %>%
+  rename(plz = postleitzahl)
 ```
 
 Using data from the Federal Statistical Institute, we create a mapping from *Postleitzahl* (PLZ) to *Bundestagwahlkreis* (BWK). We similarly create a mapping from BWK to PLZ. 
 
 `r knitr::kable(wahlkreis_plz[1:5, ], caption = "First 5 Rows of PLZ-ordered electoral districts")`
 
-While it is expected that most BWK encompass multiple PLZ, with the average BWK corresponding to `r pull( wk_plz_number)` districts. However, `r pull(plz_multiple_wk)` PLZs correspond to multiple BWK, with the most extreme being PLZ 10178 in Berlin, which corresponds to 12 electoral districts. As such, matching ESP projects on PLZ will lead to a certain margin of error, and the column `mult_wk` is set to `TRUE` for PLZ that have multiple BWK. 
+It is expected that BWKs encompass multiple PLZ, with the average BWK corresponding to `r pull( wk_plz_number)` districts. However, `r pull(plz_multiple_wk)` PLZ correspond to multiple BWK, with the most extreme being PLZ 10178 in Berlin, which corresponds to 12 electoral districts. As such, matching ESP projects on PLZ will lead to a certain margin of error, and the column `mult_wk` is set to `TRUE` for PLZ that have multiple BWK. 
 
 ## North Rhine Westphalia
+
+```{r nrw, echo=FALSE}
+
+nrw_col_types = c(
+  "text",
+  "text",
+  "text",
+  "date",
+  "date",
+  "numeric",
+  "text",
+  "text",
+  "text",
+  "text",
+  "text",
+  "text",
+  "numeric",
+  "numeric"
+)
+
+nrw <- read_xlsx("data/bundeslaender/NRW.xlsx", skip = 1, col_types = nrw_col_types) %>%
+  clean_names() %>%
+  rename(
+    operation = operation_name,
+    purpose = purpose_and_expected_achievements,
+    cost = total_cost,
+    objective = specific_objective,
+    eu_cofinancing = union_co_financing_rate,
+    plz = location_indicator_postal_code,
+    city = location_indicator_location,
+    intervention_type = interven_tion_type 
+  ) %>%
+  mutate(
+    plz = str_replace_all(plz," ", "")
+  )
+
+nrw <- nrw[-c(1,2), ]
+
+nrw_wk <- nrw %>%
+  left_join(wahlkreis_plz_merge, join_by(plz))
+```
+
