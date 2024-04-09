@@ -1,4 +1,4 @@
-"","plz","plz_name","wkr_nr","wkr_name","land_nr","land_name","einwohner","qkm","wk_pct"
+"","plz","plz_name","wkr_nr","wkr_name","land_nr","land_name","plz_einwohner","plz_qkm","plz_wk_pct"
 "1","01067","Dresden",159,"Dresden I","14","Sachsen",11957,6.866839,0.999946623585153
 "2","01069","Dresden",159,"Dresden I","14","Sachsen",25483,5.339213,0.999997717003334
 "3","01097","Dresden",160,"Dresden II – Bautzen II","14","Sachsen",14821,3.298022,0.999945295399963

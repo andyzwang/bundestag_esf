@@ -142,7 +142,10 @@ repeat_num <- partial_matches[c("plz", "wkr_nr")] %>%
 final_df <- rbind(rbind(full_contains, partial_matches), augsburg_oddity) %>%
   filter(!is.na(plz)) %>%
   arrange(plz) %>%
-  select(plz, plz_name, wkr_nr, wkr_name, land_nr, land_name, einwohner, qkm, wk_pct)
+  select(plz, plz_name, wkr_nr, wkr_name, land_nr, land_name, einwohner, qkm, wk_pct) %>%
+  rename (plz_einwohner = einwohner,
+          plz_qkm = qkm,
+          plz_wk_pct = wk_pct)
 
 # reset row names
 row.names(final_df) <- NULL
