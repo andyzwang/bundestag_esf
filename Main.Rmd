@@ -1,0 +1,100 @@
+---
+title: "ESF Projects"
+output: html_notebook
+---
+
+```{r setup, include = FALSE}
+
+knitr::opts_chunk$set(include = F, rows.print=5)
+library(ggplot2)
+library(tidyverse)
+```
+
+The European Social Fund Plus (ESF+) is the European Union (EU)’s main instrument for investing in people and supporting the implementation of the European Pillar of Social Rights. With a budget of €142.7 billion for the period 2021-2027, the ESF+ will continue to provide an important contribution to the EU’s employment, social, education and skills policies, including structural reforms in these areas [[European Commission](https://european-social-fund-plus.ec.europa.eu/en/what-esf)].
+
+## Project Description
+
+The goal of this project is to collate individual ESF+ projects into German electoral districts, and to standardize formatting between the various data sources from each individual federal state (*Bundesland*). 
+
+## Electoral Districts
+
+```{r electoral_districts, include = FALSE}
+
+# Electoral district data for 20. election period from federal statistical
+# office, as of 4th quarter 2020 
+
+electoral_xl_names <- c(
+  "ARS",
+  "AGS",
+  "Gemeinde",
+  "BWK Nummer",
+  "BWK Name",
+  "Postleitzahl",
+  "Fläche",
+  "Bevölkerung",
+  "Bevölkerung Männlich",
+  "Bevölkerung Weiblich"
+)
+
+library(readxl)
+library(janitor)
+wahlkreis <- read_xls("data/wahlkreis/Wahlkreise.xls", sheet = 2, skip = 5, 
+                      col_names = electoral_xl_names) %>%
+  clean_names() %>%
+  select(postleitzahl, everything()) %>%
+  filter(!is.na(postleitzahl))
+
+# wahlkreis_plz organizes by post code
+
+wahlkreis_plz <- wahlkreis %>%
+  group_by(postleitzahl) %>%
+  summarize(
+    ars = list(unique(ars)),
+    ags = list(unique(ags)),
+    gemeinde = list(unique(gemeinde)),
+    bwk_nummer = list(unique(bwk_nummer)),
+    bwk_name = list(unique(bwk_name)),
+    flache = sum(flache),
+    bevolkerung = sum(bevolkerung),
+    bevolkerung_mannlich = sum(bevolkerung_mannlich),
+    bevolkerung_weiblich = sum(bevolkerung_weiblich)
+  ) %>%
+  mutate(
+    mult_wk = if_else(
+      lengths(bwk_nummer) > 1, TRUE, FALSE
+    )
+  )
+
+wahlkreis_wk <- wahlkreis %>%
+  group_by(bwk_nummer) %>%
+  summarize(
+    bwk_name = list(unique(bwk_name)),
+    postleitzahl = list(unique(postleitzahl)),
+    ars = list(unique(ars)),
+    ags = list(unique(ags)),
+    gemeinde = list(unique(gemeinde)),
+    flache = sum(flache),
+    bevolkerung = sum(bevolkerung),
+    bevolkerung_mannlich = sum(bevolkerung_mannlich),
+    bevolkerung_weiblich = sum(bevolkerung_weiblich)
+  )
+
+wk_plz_number <- wahlkreis_wk %>%
+  mutate(
+    plz_num = lengths(postleitzahl)
+  ) %>%
+  summarize(avg_plz = mean(plz_num))
+
+plz_multiple_wk <- wahlkreis_plz %>%
+  filter(mult_wk == TRUE) %>%
+  summarize(c = n())
+
+```
+
+Using data from the Federal Statistical Institute, we create a mapping from *Postleitzahl* (PLZ) to *Bundestagwahlkreis* (BWK). We similarly create a mapping from BWK to PLZ. 
+
+`r knitr::kable(wahlkreis_plz[1:5, ], caption = "First 5 Rows of PLZ-ordered electoral districts")`
+
+While it is expected that most BWK encompass multiple PLZ, with the average BWK corresponding to `r pull( wk_plz_number)` districts. However, `r pull(plz_multiple_wk)` PLZs correspond to multiple BWK, with the most extreme being PLZ 10178 in Berlin, which corresponds to 12 electoral districts. As such, matching ESP projects on PLZ will lead to a certain margin of error, and the column `mult_wk` is set to `TRUE` for PLZ that have multiple BWK. 
+
+## North Rhine Westphalia
