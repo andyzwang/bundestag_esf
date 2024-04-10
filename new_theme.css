@@ -62,7 +62,7 @@ d-appendix {
   --title-size:       18px;
   --text-color:       #000;                     /* edited */
   --text-size:        15px;
-  --hover-color:      #ff00ff;                  /* edited */
+  --hover-color:      #4ba047;                  /* edited */
   --bkgd-color:       #fff;                     /* edited */
 }
 
@@ -76,12 +76,12 @@ d-appendix {
 /*-- Additional custom styles --*/
 
 .categories li > a:hover {
-    color: #00ff00;
-    border-bottom: 1px #00ff00;
+    color: #4ba047;
+    border-bottom: 1px #4ba047;
 }
 
 p a:hover  {
-    color: #00ff00;
+    color: #4ba047;
 }
 
 /* Change appearance of headers */

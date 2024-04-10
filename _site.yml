@@ -12,4 +12,4 @@ navbar:
       href: data.html
 output: 
   distill::distill_article:
-    css: styles.css
+    theme: new_theme.css
