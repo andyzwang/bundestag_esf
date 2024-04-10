@@ -11,7 +11,7 @@
 
 
 
-<title>ESF Projects</title>
+<title>Data &amp; Methodology</title>
 
 <script src="site_libs/header-attrs-2.24/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -238,7 +238,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">My Website</a>
+      <a class="navbar-brand" href="index.html">ESF+ Grants Database</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -246,7 +246,7 @@ $(document).ready(function () {
   <a href="index.html">Home</a>
 </li>
 <li>
-  <a href="about.html">About</a>
+  <a href="data.html">Data &amp; Methodology</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -260,52 +260,28 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">ESF Projects</h1>
+<h1 class="title toc-ignore">Data &amp; Methodology</h1>
 
 </div>
 
 
-<p>The European Social Fund Plus (ESF+) is the European Union (EU)’s
-main instrument for investing in people and supporting the
-implementation of the European Pillar of Social Rights. With a budget of
-€142.7 billion for the period 2021-2027, the ESF+ will continue to
-provide an important contribution to the EU’s employment, social,
-education and skills policies, including structural reforms in these
-areas [<a
-href="https://european-social-fund-plus.ec.europa.eu/en/what-esf">European
-Commission</a>].</p>
-<div id="project-description" class="section level2">
-<h2>Project Description</h2>
-<p>The goal of this project is to collate individual ESF+ projects into
-German electoral districts, and to standardize formatting between the
-various data sources from the 12 federal states
-(<em>Bundesländer</em>).</p>
+<div id="r-markdown" class="section level2">
+<h2>R Markdown</h2>
+<p>This is an R Markdown document. Markdown is a simple formatting
+syntax for authoring HTML, PDF, and MS Word documents. For more details
+on using R Markdown see <a href="http://rmarkdown.rstudio.com"
+class="uri">http://rmarkdown.rstudio.com</a>.</p>
+<p>When you click the <strong>Knit</strong> button a document will be
+generated that includes both content as well as the output of any
+embedded R code chunks within the document. You can embed an R code
+chunk like this:</p>
 </div>
-<div id="electoral-districts" class="section level2">
-<h2>Electoral Districts</h2>
-<p>See <code>geomatching.R</code> for the process of creating a bridge
-between the German postal codes (<em>Postleitzahlen</em>, PLZ) and
-Bundestag electoral districts (<em>Bundestagswahlkreise</em>, or BWK).
-The 299 electoral districts correspond to ~8,200 PLZ, with approximately
-100 PLZ being located in more than one electoral district.</p>
-<p>This data does not exist publicly (<a
-href="https://fragdenstaat.de/anfrage/veroffentlichung-einer-vollstandigen-liste-von-postleitzahlen-und-den-zugehorigen-wahlkreisen/">see
-here</a>) and was collated through dual-mapping publicly-available JSON
-mapping files.</p>
-<ul>
-<li>PLZ Data [<a
-href="https://www.suche-postleitzahl.org/downloads">Postleitzahlen
-Deutschland</a>, Updated 15.07.2023, <a
-href="https://www.openstreetmap.org/copyright">Open Database
-License</a>]</li>
-<li>Constituency Data [<a
-href="https://www.bundeswahlleiterin.de/en/bundestagswahlen/2021/wahlkreiseinteilung/downloads.html">The
-Federal Returning Officer</a>, © Der Bundeswahlleiter, Statistisches
-Bundesamt, Wiesbaden 2020]</li>
-</ul>
-</div>
-<div id="north-rhine-westphalia" class="section level2">
-<h2>North Rhine Westphalia</h2>
+<div id="including-plots" class="section level2">
+<h2>Including Plots</h2>
+<p>You can also embed plots, for example:</p>
+<p>Note that the <code>echo = FALSE</code> parameter was added to the
+code chunk to prevent printing of the R code that generated the
+plot.</p>
 </div>
 
 

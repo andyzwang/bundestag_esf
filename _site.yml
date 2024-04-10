@@ -4,4 +4,6 @@ navbar:
   left:
     - text: "Home"
       href: index.html
+    - text: "Data & Methodology"
+      href: data.html
 output_dir: docs
