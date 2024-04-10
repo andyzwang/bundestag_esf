@@ -8,6 +8,7 @@ knitr::opts_chunk$set(include = F, rows.print = 5)
 library(ggplot2)
 library(tidyverse)
 library(readxl)
+library(janitor)
 
 bridge <- readRDS("output_data/plz_wkr_bridge.rds")
 ```
@@ -73,8 +74,9 @@ nrw <- nrw[-c(1, 2), ]
 nrw_wk <- nrw %>%
   left_join(bridge, join_by(plz))
 
-
 nrw_wk_display <- nrw_wk %>%
   group_by(land_name, wkr_nr, wkr_name) %>%
   summarize(funds = sum(cost))
 ```
+
+
