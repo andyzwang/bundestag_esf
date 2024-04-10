@@ -1,6 +1,6 @@
-name: "my-website"
+name: "ESF+ Grants"
 navbar:
-  title: "My Website"
+  title: "ESF+ Grants Database"
   left:
     - text: "Home"
       href: index.html
