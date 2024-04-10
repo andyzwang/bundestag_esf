@@ -1,9 +1,13 @@
-name: "ESF+ Grants"
+name: "bundestag_esf"
+title: "EFS+ Database"
+description: |
+  EFS+ Database
+output_dir: "docs"
 navbar:
-  title: "ESF+ Grants Database"
   left:
     - text: "Home"
       href: index.html
+  right:
     - text: "Data & Methodology"
       href: data.html
-output_dir: docs
+output: distill::distill_article

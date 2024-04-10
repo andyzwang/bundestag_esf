@@ -1,79 +1,16 @@
 ---
-title: "ESF Projects"
+title: "ESF+ Database"
+site: distill::distill_website
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(include = F, rows.print = 5)
-library(ggplot2)
-library(tidyverse)
-library(readxl)
-library(janitor)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
 
-bridge <- readRDS("output_data/plz_wkr_bridge.rds")
+# Learn more about creating websites with Distill at:
+# https://rstudio.github.io/distill/website.html
+
+# Learn more about publishing to GitHub Pages at:
+# https://rstudio.github.io/distill/publish_website.html#github-pages
+
 ```
 
-The European Social Fund Plus (ESF+) is the European Union (EU)’s main instrument for investing in people and supporting the implementation of the European Pillar of Social Rights. With a budget of €142.7 billion for the period 2021-2027, the ESF+ will continue to provide an important contribution to the EU’s employment, social, education and skills policies, including structural reforms in these areas [[European Commission](https://european-social-fund-plus.ec.europa.eu/en/what-esf)].
-
-## Project Description
-
-The goal of this project is to collate individual ESF+ projects into German electoral districts, and to standardize formatting between the various data sources from the 12 federal states (*Bundesländer*). 
-
-## Electoral Districts
-
-See `geomatching.R` for the process of creating a bridge between the German postal codes (*Postleitzahlen*, PLZ) and Bundestag electoral districts (*Bundestagswahlkreise*, or BWK). The 299 electoral districts correspond to ~8,200 PLZ, with approximately 100 PLZ being located in more than one electoral district. 
-
-This data does not exist publicly ([see here](https://fragdenstaat.de/anfrage/veroffentlichung-einer-vollstandigen-liste-von-postleitzahlen-und-den-zugehorigen-wahlkreisen/)) and was collated through dual-mapping publicly-available JSON mapping files.
-
-* PLZ Data [[Postleitzahlen Deutschland](https://www.suche-postleitzahl.org/downloads), Updated 15.07.2023, [Open Database License](https://www.openstreetmap.org/copyright)]
-* Constituency Data [[The Federal Returning Officer](https://www.bundeswahlleiterin.de/en/bundestagswahlen/2021/wahlkreiseinteilung/downloads.html), © Der Bundeswahlleiter, Statistisches Bundesamt, Wiesbaden 2020]
-
-## North Rhine Westphalia
-
-```{r nrw, warning=FALSE}
-nrw_col_types <- c(
-  "text",
-  "text",
-  "text",
-  "date",
-  "date",
-  "numeric",
-  "text",
-  "text",
-  "text",
-  "text",
-  "text",
-  "text",
-  "numeric",
-  "numeric"
-)
-
-nrw <- read_xlsx("raw_data/federal_states/NRW.xlsx", skip = 1, col_types = nrw_col_types) %>%
-  clean_names() %>%
-  filter(
-    country == "DE"
-  ) %>%
-  select(-country) %>%
-  rename(
-    operation = operation_name,
-    purpose = purpose_and_expected_achievements,
-    cost = total_cost,
-    objective = specific_objective,
-    eu_cofinancing = union_co_financing_rate,
-    plz = location_indicator_postal_code,
-    city = location_indicator_location,
-    intervention_type = interven_tion_type
-  ) %>%
-  mutate(
-    plz = str_replace_all(plz, " ", ""),
-    funding_state = "Nordrhein-Westfalen"
-  )
-
-nrw <- nrw[-c(1, 2), ]
-
-nrw_wk <- nrw %>%
-  left_join(bridge, join_by(plz))
-
-nrw_wk_display <- nrw_wk %>%
-  group_by(land_name, wkr_nr, wkr_name) %>%
-  summarize(funds = sum(cost))
-```

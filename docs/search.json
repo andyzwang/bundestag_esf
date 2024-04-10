@@ -1,0 +1,34 @@
+{
+  "articles": [
+    {
+      "path": "about.html",
+      "title": "About this site",
+      "description": "Some additional details about the website",
+      "author": [],
+      "contents": "\n\n\n\n",
+      "last_modified": "2024-04-10T12:39:34+02:00"
+    },
+    {
+      "path": "data.html",
+      "title": "Data & Methodology",
+      "author": [],
+      "contents": "\nR Markdown\nThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.\nWhen you click the Knit button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:\nIncluding Plots\nYou can also embed plots, for example:\nNote that the echo = FALSE parameter was added to the code chunk to prevent printing of the R code that generated the plot.\n\n\n\n",
+      "last_modified": "2024-04-10T12:39:34+02:00"
+    },
+    {
+      "path": "index.html",
+      "title": "ESF+ Database",
+      "author": [],
+      "contents": "\n\n\n\n",
+      "last_modified": "2024-04-10T12:39:35+02:00"
+    },
+    {
+      "path": "index2.html",
+      "title": "ESF Projects",
+      "author": [],
+      "contents": "\nThe European Social Fund Plus (ESF+) is the European Union (EU)’s main instrument for investing in people and supporting the implementation of the European Pillar of Social Rights. With a budget of €142.7 billion for the period 2021-2027, the ESF+ will continue to provide an important contribution to the EU’s employment, social, education and skills policies, including structural reforms in these areas [European Commission].\nProject Description\nThe goal of this project is to collate individual ESF+ projects into German electoral districts, and to standardize formatting between the various data sources from the 12 federal states (Bundesländer).\nElectoral Districts\nSee geomatching.R for the process of creating a bridge between the German postal codes (Postleitzahlen, PLZ) and Bundestag electoral districts (Bundestagswahlkreise, or BWK). The 299 electoral districts correspond to ~8,200 PLZ, with approximately 100 PLZ being located in more than one electoral district.\nThis data does not exist publicly (see here) and was collated through dual-mapping publicly-available JSON mapping files.\nPLZ Data [Postleitzahlen Deutschland, Updated 15.07.2023, Open Database License]\nConstituency Data [The Federal Returning Officer, © Der Bundeswahlleiter, Statistisches Bundesamt, Wiesbaden 2020]\nNorth Rhine Westphalia\n\n\n\n",
+      "last_modified": "2024-04-10T12:39:36+02:00"
+    }
+  ],
+  "collections": []
+}
