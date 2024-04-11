@@ -3,3 +3,5 @@
 .RData
 .Ruserdata
 *.geojson
+.DS_Store
+*.Rproj
