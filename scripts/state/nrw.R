@@ -11,13 +11,15 @@ bridge <- readRDS("output/geo/plz_wkr_bridge.rds")
 
 # set column types for import
 nrw_col_types <- c(
-  "text", "text", "text","date","date","numeric","text","text","text", "text",
-  "text","text","numeric","numeric"
+  "text", "text", "text", "date", "date", "numeric", "text", "text", "text", "text",
+  "text", "text", "numeric", "numeric"
 )
 
 # import excel
-nrw <- read_xlsx("raw/federal_states/NRW.xlsx", skip = 1, 
-                 col_types = nrw_col_types) %>%
+nrw <- read_xlsx("raw/federal_states/NRW.xlsx",
+  skip = 1,
+  col_types = nrw_col_types
+) %>%
   clean_names() %>%
   # oddly, some foreign projects being funded — filter out and delete col
   filter(
@@ -68,3 +70,41 @@ library(openxlsx)
 write.xlsx(nrw_full, "output/state/nrw.xlsx")
 write.csv(nrw_full, "output/state/nrw.csv", fileEncoding = "UTF-8")
 saveRDS(nrw_full, file = "output/state/nrw.rds")
+
+reactable(nrw_full)
+
+nrw_summary <- nrw_full %>%
+  group_by(beneficiary, city, project_name) %>%
+  summarize(
+    objectives = toString(unique(eso_objective)),
+    total_funding = sum(eu_cost),
+    plz = toString(unique(plz)),
+    wkr_nr = toString(unique(wkr_nr)),
+    wkr_name = toString(unique(wkr_name)),
+    land = toString(unique(land_name))
+  ) %>%
+  ungroup() %>%
+  select(
+    beneficiary, project_name, objectives, total_funding, city, everything()
+  )
+
+reactable(nrw_summary,
+  groupBy = "beneficiary",
+  searchable = TRUE,
+  columns = list(
+    beneficiary = colDef(name = "Beneficiary", align = "left"),
+    city = colDef(name = "City", aggregate = "unique", align = "right"),
+    project_name = colDef(name = "Project Name", align = "left"),
+    objectives = colDef(name = "Objectives", aggregate = "unique", align = "left"),
+    total_funding = colDef(name = "EU Funding", aggregate = "sum", align = "right", format = colFormat(prefix = "€", separators = TRUE, digits = 2, locales = "de-DE")),
+    plz = colDef(name = "PLZ", aggregate = "unique", align = "right"),
+    wkr_nr = colDef(name = "Electoral District", aggregate = "unique", align = "right"),
+    wkr_name = colDef(name = "District Name", aggregate = "unique", align = "right"),
+    land = colDef(name = "State", aggregate = "unique", align = "right")
+  ),
+  defaultPageSize = 10,
+  paginationType = "jump",
+  highlight = TRUE,
+  bordered = TRUE, 
+  striped = TRUE
+)

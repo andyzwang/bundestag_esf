@@ -88,26 +88,26 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>EFS+ Database: Data &amp; Methodology</title>
+  <title>EFS+ Datenbank: Daten und Methodik</title>
 
 
 
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="EFS+ Database: Data &amp; Methodology"/>
+  <meta property="og:title" content="EFS+ Datenbank: Daten und Methodik"/>
   <meta property="og:type" content="article"/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:site_name" content="EFS+ Database"/>
+  <meta property="og:site_name" content="EFS+ Datenbank"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="EFS+ Database: Data &amp; Methodology"/>
+  <meta property="twitter:title" content="EFS+ Datenbank: Daten und Methodik"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title"]}},"value":[{"type":"character","attributes":{},"value":["Data & Methodology"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title"]}},"value":[{"type":"character","attributes":{},"value":["Daten und Methodik"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2462,7 +2462,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Data & Methodology","authors":[]}
+{"title":"Daten und Methodik","authors":[]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2470,11 +2470,45 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <header class="header header--fixed" role="banner">
 <nav class="distill-site-nav distill-site-header">
 <div class="nav-left">
-<a href="index.html" class="title">EFS+ Database</a>
-<a href="index.html">Home</a>
+<a href="index.html" class="title">EFS+ Datenbank</a>
+<div class="nav-dropdown">
+<button class="nav-dropbtn">
+Bundesprogramme
+ 
+<span class="down-arrow">&#x25BE;</span>
+</button>
+<div class="nav-dropdown-content">
+<a href="data.html">BMBF</a>
+</div>
+</div>
+<div class="nav-dropdown">
+<button class="nav-dropbtn">
+Länderprogramme
+ 
+<span class="down-arrow">&#x25BE;</span>
+</button>
+<div class="nav-dropdown-content">
+<a href="data.html">Baden-Württemberg</a>
+<a href="data.html">Bayern</a>
+<a href="data.html">Berlin</a>
+<a href="data.html">Brandenburg</a>
+<a href="data.html">Bremen</a>
+<a href="data.html">Hamburg</a>
+<a href="data.html">Hesse</a>
+<a href="data.html">Mecklenburg-Vorpommern</a>
+<a href="data.html">Niedersachsen</a>
+<a href="nrw.html">Nordrhein Westfalen</a>
+<a href="data.html">Rhineland-Pfalz</a>
+<a href="data.html">Saarland</a>
+<a href="data.html">Saxon</a>
+<a href="data.html">Saxon-Anhalt</a>
+<a href="data.html">Schleswig-Holstein</a>
+<a href="data.html">Thüringen</a>
+</div>
+</div>
 </div>
 <div class="nav-right">
-<a href="data.html">Data &amp; Methodology</a>
+<a href="data.html">Daten und Methodik</a>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
 </div>
 </nav>
@@ -2484,7 +2518,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Data &amp; Methodology</h1>
+<h1>Daten und Methodik</h1>
 
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
@@ -2493,16 +2527,16 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
 <div class="d-article">
-<p>No central database of individual ESF+ projects across Germany is publicly accessible. Therefore, this project collates ESF+ data from the 16 federal states and the national government into a standardized format, along with information about geographies at various levels.</p>
-<h2 id="methodology">Methodology</h2>
-<h3 id="geographic-standardization">Geographic Standardization</h3>
-<p>Projects are identified at the geographic levels of city, postal code (PLZ), Bundestag electoral district (BWK), and federal state.</p>
-<h4 id="plz-to-bwk">PLZ to BWK</h4>
-<p>While the Federal Statistical Office publishes a crosswalk between electoral districts and postal codes, this data is not complete, as it has one entry for each <em>Gemeinde</em>, its associated BWK, and the primary postal code of administration.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> The FSO has not published complete data, ostensibly out of copyright reasons.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<p>Open-source and publicly available <a href="#geocoding">PLZ and BWK GeoJSON files</a> was used to create a bridge between the two. The R package <code>sf</code> was used to compare the boundaries of these two layers.</p>
+<p>Es gibt keine zentrale Datenbank für einzelne ESF+-Projekte in Deutschland, die öffentlich zugänglich ist. Daher werden in diesem Projekt die ESF+-Daten der 16 Bundesländer und des Bundes in einem einheitlichen Format zusammengeführt und mit Informationen über die geografischen Gegebenheiten auf verschiedenen Ebenen versehen.</p>
+<h2 id="methodik">Methodik</h2>
+<h3 id="geografische-vereinheitlichung">Geografische Vereinheitlichung</h3>
+<p>Die Projekte werden auf den geografischen Ebenen Stadt, Postleitzahl (PLZ), Bundestagswahlkreis (BWK) und Bundesland ausgewiesen.</p>
+<h4 id="plz-bwk">PLZ-BWK</h4>
+<p>Das Statistische Bundesamt veröffentlicht zwar einen Querverweis zwischen Wahlkreisen und Postleitzahlen, aber diese Daten sind nicht vollständig, da sie einen Eintrag für jede Gemeinde, den zugehörigen BWK und die primäre Postleitzahl der Verwaltung enthalten.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Das BFS hat keine vollständigen Daten veröffentlicht, angeblich aus Gründen des Urheberrechts.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>Open-Source und öffentlich verfügbar <a href="#geocoding">PLZ und BWK GeoJSON-Dateien</a> wurde verwendet, um einen Querverweis zwischen den beiden zu schaffen. Das R-Paket <code>sf</code> wurde verwendet, um die Grenzen dieser beiden Schichten zu vergleichen.</p>
 <details>
 <summary>
-PLZ-BWK Crosswalk R Code [<a href="scripts/geo/plz_bwk_crosswalk.R">Live</a>]
+PLZ-BWK Querverweis R Code [<a href="scripts/geo/plz_bwk_crosswalk.R">Live</a>]
 </summary>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(sf)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(dplyr)</span>
@@ -2639,7 +2673,7 @@ PLZ-BWK Crosswalk R Code [<a href="scripts/geo/plz_bwk_crosswalk.R">Live</a>]
 <span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.csv</span>(final_df, <span class="st">&quot;output/geo/plz_wkr_bridge.csv&quot;</span>, <span class="at">fileEncoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
 <span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(final_df, <span class="at">file =</span> <span class="st">&quot;output_data/geo/plz_wkr_bridge.rds&quot;</span>)</span></code></pre></div>
 </details>
-<p>2,815 PLZ are contained solely within one electoral district. The remaining PLZs were compared pairwise with all electoral districts for spatial overlap, with 12,119 PLZ-BWK pairs. A threshold of 25% PLZ coverage was set for each PLZ-BWK pair based on a threshold analysis.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>2.815 PLZ sind ausschließlich in einem Wahlkreis enthalten. Die übrigen PLZ wurden paarweise mit allen Wahlbezirken auf räumliche Überschneidungen verglichen, wobei 12.119 PLZ-BWK-Paare entstanden. Auf der Grundlage einer Schwellenwertanalyse wurde für jedes PLZ-BWK-Paar ein Schwellenwert von 25 % PLZ-Abdeckung festgelegt.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <details>
 <summary>
 PLZ-BWK Treshold Table
@@ -2649,27 +2683,27 @@ PLZ-BWK Treshold Table
 <script type="application/json" data-for="htmlwidget-a7527fc01341b7f20640">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"tolerance":[0,0.01,0.05,0.1,0.15,0.2,0.25,0.33,0.4,0.5],"nrows":[12119,6067,5566,5492,5455,5434,5411,5376,5349,5313]},"columns":[{"id":"tolerance","name":"Tolerance","type":"numeric","align":"center","headerStyle":{"background":"#f7f7f8"},"format":{"cell":{"digits":0,"percent":true},"aggregated":{"digits":0,"percent":true}}},{"id":"nrows","name":"PLZ-BWK Pairs","type":"list","align":"center","headerStyle":{"background":"#f7f7f8"},"format":{"cell":{"separators":true},"aggregated":{"separators":true}}}],"highlight":true,"bordered":true,"dataKey":"cf6676c00d557926ce47a28c2cba443e"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 </details>
-<p>Ultimately, 8,256 PLZs were matched to the 299 electoral districts, with 91 postal codes spread across 2 electoral districts, and 2 spread across 3 electoral districts [<a href="%22output_data/plz_wkr_bridge.csv%22"><code>CSV</code></a>][<a href="%22output_data/plz_wkr_bridge.rds%22"><code>RData</code></a>][<a href="%22output_data/plz_wkr_bridge.xlsx%22"><code>XLSX</code></a>].</p>
-<h3 id="esf-objectives">ESF Objectives</h3>
-<h3 id="geographic-information">Geographic Information</h3>
-<h2 id="data-sources">Data Sources</h2>
+<p>Letztendlich wurden 8.256 PLZs den 299 Wahlbezirken zugeordnet, wobei 91 Postleitzahlen auf 2 Wahlbezirke und 2 auf 3 Wahlbezirke verteilt waren [<a href="%22output_data/plz_wkr_bridge.csv%22"><code>CSV</code></a>][<a href="%22output_data/plz_wkr_bridge.rds%22"><code>RData</code></a>][<a href="%22output_data/plz_wkr_bridge.xlsx%22"><code>XLSX</code></a>].</p>
+<h3 id="esf-ziele">ESF+-Ziele</h3>
+<h3 id="geografische-informationen">Geografische Informationen</h3>
+<h2 id="datenquellen">Datenquellen</h2>
 <h3 id="european-social-funds">European Social Funds+</h3>
 <ul>
-<li>North-Rhine Westphalia [<a href="https://www.mags.nrw/system/files/media/document/file/esf_2021-2027_liste_der_vorhaben.xlsx"><code>XLSX</code></a>]: Ministerium für Arbeit, Gesundheit und Soziales, 31.12.2023.</li>
+<li>Nordrhein Westfalen [<a href="https://www.mags.nrw/system/files/media/document/file/esf_2021-2027_liste_der_vorhaben.xlsx"><code>XLSX</code></a>]: Ministerium für Arbeit, Gesundheit und Soziales, 31.12.2023.</li>
 </ul>
 <h3 id="geocoding">Geocoding</h3>
 <ul>
 <li>Postleitzahl Shapefile [<a href="https://downloads.suche-postleitzahl.org/v2/public/plz-5stellig.geojson"><code>GeoJSON</code></a>]: Postleitzahlen Deutschland, 15.7.2023.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></li>
-<li>Bundestag Constituency Shapefile [<a href="https://www.bundeswahlleiterin.de/en/dam/jcr/f0ce06a7-188c-4ef3-b49b-5a66719d2b46/btw21_geometrie_wahlkreise_vg250_shp.zip"><code>GeoJSON</code></a>]: Bundeswahlleiter, 15.04.2020.</li>
-<li>Bundestag Constituency Names [<a href="https://www.bundeswahlleiterin.de/dam/jcr/b46e4c9d-290c-4b96-a64b-0edee1c780a5/btw21_wahlkreisnamen_utf8.csv"><code>CSV</code></a>]: Bundeswahlleiter, 15.04.2020.</li>
+<li>Bundestagwahlkreise Shapefile [<a href="https://www.bundeswahlleiterin.de/en/dam/jcr/f0ce06a7-188c-4ef3-b49b-5a66719d2b46/btw21_geometrie_wahlkreise_vg250_shp.zip"><code>GeoJSON</code></a>]: Bundeswahlleiter, 15.04.2020.</li>
+<li>Namen der Bundestagswahlkreise [<a href="https://www.bundeswahlleiterin.de/dam/jcr/b46e4c9d-290c-4b96-a64b-0edee1c780a5/btw21_wahlkreisnamen_utf8.csv"><code>CSV</code></a>]: Bundeswahlleiter, 15.04.2020.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p><a href="https://www.destatis.de/DE/Themen/Laender-Regionen/Regionales/Gemeindeverzeichnis/Administrativ/Archiv/GVAuszugQ/BTW20214Q2020.html">Statistisches Bundesamt</a>, as of 7.1.2021<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p><a href="https://www.destatis.de/DE/Themen/Laender-Regionen/Regionales/Gemeindeverzeichnis/Administrativ/Archiv/GVAuszugQ/BTW20214Q2020.html">Statistisches Bundesamt</a>, stand 7.1.2021<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>“Aus lizenzrechtlichen Gründen darf das Statistische Bundesamt das vollständige Postleitzahlenverzeichnis (Urheber ist die Deutsche Post AG mit dem Produkt DATAFACTORY STREETCODE) nicht verbreiten. Der Lizenzvertrag mit der deutschen Post gestattet uns Auswertungen ausschließlich für interne Zwecke. Ohnehin ist jedoch eine Zuordnung von Postleitzahlen und Wahlkreisen in vielen Fällen nicht eindeutig möglich, da die Postleitzahlengebiete üblicherweise nicht entlang der Wahlkreisgrenzen verlaufen. Darüber hinaus liegt uns als kleinste systematisierte Gebietseinheit bei der Wahlkreiseinteilung die Gemeinde als Ganzes vor. Bei Gemeinden, die durch mehrere Wahlkreise ‘geteilt’ sind, fehlt uns eine weitere Differenzierung (z.B. nach Stadtteil, Bezirk, Straße), so dass hier ebenso eine eindeutige Zuordnung der Postleitzahlen nicht möglich ist” [<a href="https://fragdenstaat.de/anfrage/veroffentlichung-einer-vollstandigen-liste-von-postleitzahlen-und-den-zugehorigen-wahlkreisen/">FragDenStaat</a>, 26.2.2021].<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Notably, more than 6,000 pairs were dropped from the table when a trivial threshold of 1% spatial coverage was set.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Insbesondere fielen mehr als 6.000 Paare aus der Tabelle heraus, wenn eine triviale Schwelle von 1 % räumlicher Abdeckung festgelegt wurde.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p><a href="https://www.openstreetmap.org/copyright">Open Database License</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>

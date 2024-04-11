@@ -1,14 +1,50 @@
 name: "bundestag_esf"
-title: "EFS+ Database"
+title: "EFS+ Datenbank"
 description: |
-  EFS+ Database
+  EFS+ Datenbank
 output_dir: "docs"
 navbar:
   left:
-    - text: "Home"
-      href: index.html
+    - text: "Bundesprogramme"
+      menu:
+        - text: "BMBF"
+          href: data.html
+    - text: "Länderprogramme"
+      menu:
+        - text: "Baden-Württemberg"
+          href: data.html
+        - text: "Bayern"
+          href: data.html
+        - text: "Berlin"
+          href: data.html
+        - text: "Brandenburg"
+          href: data.html
+        - text: "Bremen"
+          href: data.html
+        - text: "Hamburg"
+          href: data.html
+        - text: "Hesse"
+          href: data.html
+        - text: "Mecklenburg-Vorpommern"
+          href: data.html
+        - text: "Niedersachsen"
+          href: data.html
+        - text: "Nordrhein Westfalen"
+          href: nrw.html
+        - text: "Rhineland-Pfalz"
+          href: data.html
+        - text: "Saarland"
+          href: data.html
+        - text: "Saxon"
+          href: data.html
+        - text: "Saxon-Anhalt"
+          href: data.html
+        - text: "Schleswig-Holstein"
+          href: data.html
+        - text: "Thüringen"
+          href: data.html
   right:
-    - text: "Data & Methodology"
+    - text: "Daten und Methodik"
       href: data.html
 output: 
   distill::distill_article:

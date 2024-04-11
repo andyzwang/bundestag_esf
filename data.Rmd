@@ -1,5 +1,5 @@
 ---
-title: "Data & Methodology"
+title: "Daten und Methodik"
 ---
 
 ```{r setup, include=FALSE}
@@ -11,22 +11,22 @@ library(janitor)
 library(reactable)
 ```
 
-No central database of individual ESF+ projects across Germany is publicly accessible. Therefore, this project collates ESF+ data from the 16 federal states and the national government into a standardized format, along with information about geographies at various levels.
+Es gibt keine zentrale Datenbank für einzelne ESF+-Projekte in Deutschland, die öffentlich zugänglich ist. Daher werden in diesem Projekt die ESF+-Daten der 16 Bundesländer und des Bundes in einem einheitlichen Format zusammengeführt und mit Informationen über die geografischen Gegebenheiten auf verschiedenen Ebenen versehen.
 
-## Methodology
+## Methodik
 
-### Geographic Standardization
+### Geografische Vereinheitlichung
 
-Projects are identified at the geographic levels of city, postal code (PLZ), Bundestag electoral district (BWK), and federal state. 
+Die Projekte werden auf den geografischen Ebenen Stadt, Postleitzahl (PLZ), Bundestagswahlkreis (BWK) und Bundesland ausgewiesen. 
 
-#### PLZ to BWK
+#### PLZ-BWK
 
-While the Federal Statistical Office publishes a crosswalk between electoral districts and postal codes, this data is not complete, as it has one entry for each *Gemeinde*, its associated BWK, and the primary postal code of administration.^[[Statistisches Bundesamt](https://www.destatis.de/DE/Themen/Laender-Regionen/Regionales/Gemeindeverzeichnis/Administrativ/Archiv/GVAuszugQ/BTW20214Q2020.html), as of 7.1.2021] The FSO has not published complete data, ostensibly out of copyright reasons.^["Aus lizenzrechtlichen Gründen darf das Statistische Bundesamt das vollständige Postleitzahlenverzeichnis (Urheber ist die Deutsche Post AG mit dem Produkt DATAFACTORY STREETCODE) nicht verbreiten. Der Lizenzvertrag mit der deutschen Post gestattet uns Auswertungen ausschließlich für interne Zwecke. Ohnehin ist jedoch eine Zuordnung von Postleitzahlen und Wahlkreisen in vielen Fällen nicht eindeutig möglich, da die Postleitzahlengebiete üblicherweise nicht entlang der Wahlkreisgrenzen verlaufen. Darüber hinaus liegt uns als kleinste systematisierte Gebietseinheit bei der Wahlkreiseinteilung die Gemeinde als Ganzes vor. Bei Gemeinden, die durch mehrere Wahlkreise 'geteilt' sind, fehlt uns eine weitere Differenzierung (z.B. nach Stadtteil, Bezirk, Straße), so dass hier ebenso eine eindeutige Zuordnung der Postleitzahlen nicht möglich ist" [[FragDenStaat](https://fragdenstaat.de/anfrage/veroffentlichung-einer-vollstandigen-liste-von-postleitzahlen-und-den-zugehorigen-wahlkreisen/), 26.2.2021].] 
+Das Statistische Bundesamt veröffentlicht zwar einen Querverweis zwischen Wahlkreisen und Postleitzahlen, aber diese Daten sind nicht vollständig, da sie einen Eintrag für jede Gemeinde, den zugehörigen BWK und die primäre Postleitzahl der Verwaltung enthalten.^[[Statistisches Bundesamt](https://www.destatis.de/DE/Themen/Laender-Regionen/Regionales/Gemeindeverzeichnis/Administrativ/Archiv/GVAuszugQ/BTW20214Q2020.html), stand 7.1.2021] Das BFS hat keine vollständigen Daten veröffentlicht, angeblich aus Gründen des Urheberrechts.^["Aus lizenzrechtlichen Gründen darf das Statistische Bundesamt das vollständige Postleitzahlenverzeichnis (Urheber ist die Deutsche Post AG mit dem Produkt DATAFACTORY STREETCODE) nicht verbreiten. Der Lizenzvertrag mit der deutschen Post gestattet uns Auswertungen ausschließlich für interne Zwecke. Ohnehin ist jedoch eine Zuordnung von Postleitzahlen und Wahlkreisen in vielen Fällen nicht eindeutig möglich, da die Postleitzahlengebiete üblicherweise nicht entlang der Wahlkreisgrenzen verlaufen. Darüber hinaus liegt uns als kleinste systematisierte Gebietseinheit bei der Wahlkreiseinteilung die Gemeinde als Ganzes vor. Bei Gemeinden, die durch mehrere Wahlkreise 'geteilt' sind, fehlt uns eine weitere Differenzierung (z.B. nach Stadtteil, Bezirk, Straße), so dass hier ebenso eine eindeutige Zuordnung der Postleitzahlen nicht möglich ist" [[FragDenStaat](https://fragdenstaat.de/anfrage/veroffentlichung-einer-vollstandigen-liste-von-postleitzahlen-und-den-zugehorigen-wahlkreisen/), 26.2.2021].] 
 
-Open-source and publicly available [PLZ and BWK GeoJSON files](#geocoding) was used to create a bridge between the two. The R package `sf` was used to compare the boundaries of these two layers.
+Open-Source und öffentlich verfügbar [PLZ und BWK GeoJSON-Dateien](#geocoding) wurde verwendet, um einen Querverweis zwischen den beiden zu schaffen. Das R-Paket `sf` wurde verwendet, um die Grenzen dieser beiden Schichten zu vergleichen.
 
 <details>
-  <summary>PLZ-BWK Crosswalk R Code [[Live](scripts/geo/plz_bwk_crosswalk.R)]</summary>
+  <summary>PLZ-BWK Querverweis R Code [[Live](scripts/geo/plz_bwk_crosswalk.R)]</summary>
   ```r
   library(sf)
   library(dplyr)
@@ -165,7 +165,7 @@ Open-source and publicly available [PLZ and BWK GeoJSON files](#geocoding) was u
   ```
 </details>
 
-2,815 PLZ are contained solely within one electoral district. The remaining PLZs were compared pairwise with all electoral districts for spatial overlap, with 12,119 PLZ-BWK pairs. A threshold of 25% PLZ coverage was set for each PLZ-BWK pair based on a threshold analysis.^[Notably, more than 6,000 pairs were dropped from the table when a trivial threshold of 1% spatial coverage was set.] 
+2.815 PLZ sind ausschließlich in einem Wahlkreis enthalten. Die übrigen PLZ wurden paarweise mit allen Wahlbezirken auf räumliche Überschneidungen verglichen, wobei 12.119 PLZ-BWK-Paare entstanden. Auf der Grundlage einer Schwellenwertanalyse wurde für jedes PLZ-BWK-Paar ein Schwellenwert von 25 % PLZ-Abdeckung festgelegt.^[Insbesondere fielen mehr als 6.000 Paare aus der Tabelle heraus, wenn eine triviale Schwelle von 1 % räumlicher Abdeckung festgelegt wurde.] 
 
 <details>
   <summary> PLZ-BWK Treshold Table </summary>
@@ -187,20 +187,20 @@ reactable(sig_table,
 
 </details>
 
-Ultimately, 8,256 PLZs were matched to the 299 electoral districts, with 91 postal codes spread across 2 electoral districts, and 2 spread across 3 electoral districts [[`CSV`]("output_data/plz_wkr_bridge.csv")][[`RData`]("output_data/plz_wkr_bridge.rds")][[`XLSX`]("output_data/plz_wkr_bridge.xlsx")]. 
+Letztendlich wurden 8.256 PLZs den 299 Wahlbezirken zugeordnet, wobei 91 Postleitzahlen auf 2 Wahlbezirke und 2 auf 3 Wahlbezirke verteilt waren [[`CSV`]("output_data/plz_wkr_bridge.csv")][[`RData`]("output_data/plz_wkr_bridge.rds")][[`XLSX`]("output_data/plz_wkr_bridge.xlsx")]. 
 
-### ESF Objectives
+### ESF+-Ziele
 
-### Geographic Information
+### Geografische Informationen
 
-## Data Sources
+## Datenquellen
 
 ### European Social Funds+
 
-* North-Rhine Westphalia [[`XLSX`](https://www.mags.nrw/system/files/media/document/file/esf_2021-2027_liste_der_vorhaben.xlsx)]: Ministerium für Arbeit, Gesundheit und Soziales, 31.12.2023. 
+* Nordrhein Westfalen [[`XLSX`](https://www.mags.nrw/system/files/media/document/file/esf_2021-2027_liste_der_vorhaben.xlsx)]: Ministerium für Arbeit, Gesundheit und Soziales, 31.12.2023. 
 
 ### Geocoding
 
 * Postleitzahl Shapefile [[`GeoJSON`](https://downloads.suche-postleitzahl.org/v2/public/plz-5stellig.geojson)]: Postleitzahlen Deutschland, 15.7.2023.^[[Open Database License](https://www.openstreetmap.org/copyright)]
-* Bundestag Constituency Shapefile [[`GeoJSON`](https://www.bundeswahlleiterin.de/en/dam/jcr/f0ce06a7-188c-4ef3-b49b-5a66719d2b46/btw21_geometrie_wahlkreise_vg250_shp.zip)]: Bundeswahlleiter, 15.04.2020.
-* Bundestag Constituency Names [[`CSV`](https://www.bundeswahlleiterin.de/dam/jcr/b46e4c9d-290c-4b96-a64b-0edee1c780a5/btw21_wahlkreisnamen_utf8.csv)]: Bundeswahlleiter, 15.04.2020.
+* Bundestagwahlkreise Shapefile [[`GeoJSON`](https://www.bundeswahlleiterin.de/en/dam/jcr/f0ce06a7-188c-4ef3-b49b-5a66719d2b46/btw21_geometrie_wahlkreise_vg250_shp.zip)]: Bundeswahlleiter, 15.04.2020.
+* Namen der Bundestagswahlkreise [[`CSV`](https://www.bundeswahlleiterin.de/dam/jcr/b46e4c9d-290c-4b96-a64b-0edee1c780a5/btw21_wahlkreisnamen_utf8.csv)]: Bundeswahlleiter, 15.04.2020.
