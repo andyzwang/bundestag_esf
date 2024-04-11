@@ -27,13 +27,15 @@ nrw <- read_xlsx("raw/federal_states/NRW.xlsx", skip = 1,
   # rename columns
   rename(
     project_name = operation_name,
-    purpose = purpose_and_expected_achievements,
-    cost = total_cost,
-    objective = specific_objective,
+    project_purpose = purpose_and_expected_achievements,
+    project_cost = total_cost,
+    project_start = start_date,
+    project_end = end_date,
+    eso_objective = specific_objective,
     eu_cofinancing = union_co_financing_rate,
     plz = location_indicator_postal_code,
     city = location_indicator_location,
-    intervention_type = interven_tion_type
+    intervention_code = interven_tion_type
   ) %>%
   # remove blank spaces and get rid of blank spaces
   mutate(
@@ -48,9 +50,21 @@ nrw <- nrw[-c(1, 2), ]
 # some BWK have multiple PLZ)
 nrw_full <- nrw %>%
   left_join(bridge, join_by(plz), relationship = "many-to-many") %>%
+  mutate(
+    eu_cofinancing = str_replace(eu_cofinancing, " %", ""),
+    eu_cofinancing = as.numeric(eu_cofinancing) / 100,
+    eu_cost = round(project_cost * eu_cofinancing, 2)
+  ) %>%
   rename(
     project_id = id,
   ) %>%
   select(
-    project_id, beneficiary, project_name, everything(), -fund
+    project_id, beneficiary, project_name, project_purpose, eso_objective,
+    intervention_code, project_start, project_end, project_cost, eu_cofinancing,
+    eu_cost, funding_state, city, plz, everything(), -fund
   )
+
+library(openxlsx)
+write.xlsx(nrw_full, "output/state/nrw.xlsx")
+write.csv(nrw_full, "output/state/nrw.csv", fileEncoding = "UTF-8")
+saveRDS(nrw_full, file = "output/state/nrw.rds")
