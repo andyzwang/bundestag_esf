@@ -17,7 +17,7 @@ html {
   /*-- Main font sizes --*/
   --title-size:      50px;
   --body-size:       1.075rem;                   /* edited */
-  --code-size:       14px;
+  --code-size:       12px;
   --aside-size:      12px;
   --fig-cap-size:    13px;
   /*-- Main font colors --*/
@@ -99,4 +99,9 @@ html, body, p {
 ul > li::marker {
     font-weight: 700;
     font-size: 1.125em;
+}
+
+d-article aside {
+  height: 0px;
+  overflow: visible;
 }

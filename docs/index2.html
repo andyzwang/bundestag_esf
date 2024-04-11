@@ -2192,7 +2192,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     /*-- Main font sizes --*/
     --title-size:      50px;
     --body-size:       1.075rem;                   /* edited */
-    --code-size:       14px;
+    --code-size:       12px;
     --aside-size:      12px;
     --fig-cap-size:    13px;
     /*-- Main font colors --*/
@@ -2274,6 +2274,11 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   ul > li::marker {
       font-weight: 700;
       font-size: 1.125em;
+  }
+
+  d-article aside {
+    height: 0px;
+    overflow: visible;
   }</style>
   <style type="text/css">
   /* base style */
@@ -2482,15 +2487,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <div class="d-article">
 <p>The European Social Fund Plus (ESF+) is the European Union (EU)’s main instrument for investing in people and supporting the implementation of the European Pillar of Social Rights. With a budget of €142.7 billion for the period 2021-2027, the ESF+ will continue to provide an important contribution to the EU’s employment, social, education and skills policies, including structural reforms in these areas [<a href="https://european-social-fund-plus.ec.europa.eu/en/what-esf">European Commission</a>].</p>
-<h2 id="project-description">Project Description</h2>
-<p>The goal of this project is to collate individual ESF+ projects into German electoral districts, and to standardize formatting between the various data sources from the 12 federal states (<em>Bundesländer</em>).</p>
-<h2 id="electoral-districts">Electoral Districts</h2>
-<p>See <code>geomatching.R</code> for the process of creating a bridge between the German postal codes (<em>Postleitzahlen</em>, PLZ) and Bundestag electoral districts (<em>Bundestagswahlkreise</em>, or BWK). The 299 electoral districts correspond to ~8,200 PLZ, with approximately 100 PLZ being located in more than one electoral district.</p>
-<p>This data does not exist publicly (<a href="https://fragdenstaat.de/anfrage/veroffentlichung-einer-vollstandigen-liste-von-postleitzahlen-und-den-zugehorigen-wahlkreisen/">see here</a>) and was collated through dual-mapping publicly-available JSON mapping files.</p>
-<ul>
-<li>PLZ Data [<a href="https://www.suche-postleitzahl.org/downloads">Postleitzahlen Deutschland</a>, Updated 15.07.2023, <a href="https://www.openstreetmap.org/copyright">Open Database License</a>]</li>
-<li>Constituency Data [<a href="https://www.bundeswahlleiterin.de/en/bundestagswahlen/2021/wahlkreiseinteilung/downloads.html">The Federal Returning Officer</a>, © Der Bundeswahlleiter, Statistisches Bundesamt, Wiesbaden 2020]</li>
-</ul>
 <h2 id="north-rhine-westphalia">North Rhine Westphalia</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->

@@ -3,16 +3,205 @@ title: "Data & Methodology"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(include = F, rows.print = 5)
+knitr::opts_chunk$set(echo = F, rows.print = 5)
 library(ggplot2)
 library(tidyverse)
 library(readxl)
 library(janitor)
+library(reactable)
 ```
 
-## European Social Funds
+No central database of individual ESF+ projects across Germany is publicly accessible. Therefore, this project collates ESF+ data from the 16 federal states and the national government into a standardized format, along with information about geographies at various levels.
 
+## Methodology
 
+### Geographic Standardization
 
-## Geocoding
+Projects are identified at the geographic levels of city, postal code (PLZ), Bundestag electoral district (BWK), and federal state. 
+
+#### PLZ to BWK
+
+While the Federal Statistical Office publishes a crosswalk between electoral districts and postal codes, this data is not complete, as it has one entry for each *Gemeinde*, its associated BWK, and the primary postal code of administration.^[[Statistisches Bundesamt](https://www.destatis.de/DE/Themen/Laender-Regionen/Regionales/Gemeindeverzeichnis/Administrativ/Archiv/GVAuszugQ/BTW20214Q2020.html), as of 7.1.2021] The FSO has not published complete data, ostensibly out of copyright reasons.^["Aus lizenzrechtlichen Gründen darf das Statistische Bundesamt das vollständige Postleitzahlenverzeichnis (Urheber ist die Deutsche Post AG mit dem Produkt DATAFACTORY STREETCODE) nicht verbreiten. Der Lizenzvertrag mit der deutschen Post gestattet uns Auswertungen ausschließlich für interne Zwecke. Ohnehin ist jedoch eine Zuordnung von Postleitzahlen und Wahlkreisen in vielen Fällen nicht eindeutig möglich, da die Postleitzahlengebiete üblicherweise nicht entlang der Wahlkreisgrenzen verlaufen. Darüber hinaus liegt uns als kleinste systematisierte Gebietseinheit bei der Wahlkreiseinteilung die Gemeinde als Ganzes vor. Bei Gemeinden, die durch mehrere Wahlkreise 'geteilt' sind, fehlt uns eine weitere Differenzierung (z.B. nach Stadtteil, Bezirk, Straße), so dass hier ebenso eine eindeutige Zuordnung der Postleitzahlen nicht möglich ist" [[FragDenStaat](https://fragdenstaat.de/anfrage/veroffentlichung-einer-vollstandigen-liste-von-postleitzahlen-und-den-zugehorigen-wahlkreisen/), 26.2.2021].] 
+
+Open-source and publicly available [PLZ and BWK GeoJSON files](#geocoding) was used to create a bridge between the two. The R package `sf` was used to compare the boundaries of these two layers.
+
+<details>
+  <summary>PLZ-BWK Crosswalk R Code [[GitHub](https://github.com/andyzwang/bundestag_esf/blob/main/coding/geomatching.R)]</summary>
+  ```r
+  library(sf)
+  library(dplyr)
+  library(purrr)
+  library(stringr)
+  library(janitor)
+  
+  ## DATA IMPORT
+  # Load PLZ shapefiles
+  plz <- st_read("raw_data/shape_files/plz5.geojson") %>%
+    clean_names() %>%
+    select(plz, note, everything()) %>%
+    rename(
+      plz_name = note,
+      plz_einwohner = einwohner,
+      plz_qkm = qkm
+    ) %>%
+    mutate(
+      plz_name = str_replace(plz_name, paste(plz, " ", sep = ""), ""),
+      plz_name = str_replace(plz_name, "  ", " ")
+    ) %>%
+    filter(
+      plz_einwohner > 10
+    )
+  
+  # Load wahlkreis names
+  wk_namen <- read.csv("raw_data/wahlkreisnamen.csv", skip = 7) %>%
+    select(-LAND_NR, -LAND_ABK)
+  
+  # Load BWK data
+  bwk <- st_read("raw_data/shape_files/wkr.json") %>%
+    select(WKR_NR, LAND_NR) %>%
+    inner_join(wk_namen, by = c("WKR_NR")) %>%
+    clean_names() %>%
+    select(wkr_nr, wkr_name, land_nr, land_name)
+  
+  ## FULLY CONTAINED DISTRICTS
+  # Identify all PLZs that are fully enclosed within BWKs (obs: 2815)
+  
+  full_contains <- st_join(bwk, plz, join = st_contains_properly) %>%
+    mutate(wk_pct = 1) %>%
+    st_drop_geometry()
+  
+  # filter out the list of remaining PLZs
+  plz <- plz %>%
+    filter(!plz %in% full_contains$plz)
+  
+  ## PARTIALLY CONTAINED DISTRICTS
+  # Identify PLZs that partially overlap multiple BWKs
+  
+  partial_matches <- st_join(plz, bwk, join = st_overlaps)
+  
+  # Manually coding out Augsburg 253 exceptions
+  augsburg_plz <- c("82297", "86154", "86156", "86316", "86356", "86368", 
+                    "86391", "86399", "86405", "86415", "86420", "86424", 
+                    "86438", "86441", "86444", "86465", "86485", "86494", 
+                    "86495", "86504", "86507", "86508", "86510", "86511", 
+                    "86551", "86559", "86568", "86577", "86672", "86678", 
+                    "86679", "86695", "86707", "86830", "86836", "86850", 
+                    "86853", "86856", "86863", "86868", "86872", "86877")
+  augsburg_oddity <- partial_matches %>%
+    filter(wkr_nr == 253 & plz %in% augsburg_plz) %>%
+    select(plz, plz_name, wkr_nr, wkr_name, land_nr, land_name, 
+           plz_einwohner, plz_qkm, geometry) %>%
+    mutate(
+      wk_pct = NA
+    ) %>%
+    st_drop_geometry()
+  
+  # arrange by number for easier tracking
+  partial_matches <- partial_matches %>%
+    arrange(plz) %>%
+    filter(!wkr_nr == 253)
+  
+  # setting a function to find shared area for each row
+  calculate_intersection_area <- function(plz_code, wahlkreis_nummer) {
+    plz_geom <- plz %>%
+      filter(plz == plz_code) %>%
+      st_geometry()
+    bwk_geom <- bwk %>%
+      filter(wkr_nr == wahlkreis_nummer) %>%
+      st_geometry()
+    intersection_geom <- st_intersection(plz_geom, bwk_geom)
+    if (!is.null(intersection_geom)) {
+      cat(paste(plz_code, ".", sep = ""))
+      return(st_area(intersection_geom))
+    } else {
+      return(0)
+    }
+  }
+  
+  # time for some base r baby! calculating the areas of the intersections purrr
+  partial_matches$intersection_area <- pmap_dbl(
+    list(partial_matches$plz, partial_matches$wkr_nr), 
+    calculate_intersection_area
+    )
+  
+  partial_matches <- partial_matches %>%
+    # finding the area of the PLZ itself
+    mutate(
+      plz_area = as.numeric(str_replace(st_area(geometry), " \\[m\\^2\\]", "")),
+      wk_pct = intersection_area / plz_area
+    ) %>%
+    st_drop_geometry()
+  
+  # apply tolerance
+  partial_matches <- partial_matches %>%
+    filter(wk_pct > .25) %>%
+    clean_names() %>%
+    select(plz, plz_name, wkr_nr, wkr_name, land_nr, 
+           land_name, plz_einwohner, plz_qkm, wk_pct)
+  
+  # 94 PLZ have multiple WK associated with them
+  repeat_num <- partial_matches[c("plz", "wkr_nr")] %>%
+    group_by(plz) %>%
+    summarize(count = n()) %>%
+    ungroup() %>%
+    group_by(count) %>%
+    summarise(n())
+  
+  # time for the big bad boy
+  final_df <- rbind(rbind(full_contains, partial_matches), augsburg_oddity) %>%
+    filter(!is.na(plz)) %>%
+    arrange(plz) %>%
+    select(plz, plz_name, wkr_nr, wkr_name, land_nr, land_name, 
+           plz_einwohner, plz_qkm, wk_pct)
+  
+  # reset row names
+  row.names(final_df) <- NULL
+  
+  # tada!!
+  library(openxlsx)
+  write.xlsx(final_df, "output_data/plz_wkr_bridge.xlsx")
+  write.csv(final_df, "output_data/plz_wkr_bridge.csv", fileEncoding = "UTF-8")
+  saveRDS(final_df, file = "output_data/plz_wkr_bridge.rds")
+  ```
+</details>
+
+2,815 PLZ are contained solely within one electoral district. The remaining PLZs were compared pairwise with all electoral districts for spatial overlap, with 12,119 PLZ-BWK pairs. A threshold of 25% PLZ coverage was set for each PLZ-BWK pair based on a threshold analysis.^[Notably, more than 6,000 pairs were dropped from the table when a threshold of 1% spatial coverage was set.] 
+
+<details>
+  <summary> PLZ-BWK Treshold Table </summary>
+```{r threshold, print= TRUE}
+sig_table <- readRDS("output_data/sig_table.rds")
+reactable(sig_table,
+  defaultColDef = colDef(
+    align = "center",
+    headerStyle = list(background = "#f7f7f8")
+  ),
+  columns = list(
+    tolerance = colDef(format = colFormat(percent = TRUE, digits = 0), name = "Tolerance"),
+    nrows = colDef(name = "PLZ-BWK Pairs", format = colFormat(separators = TRUE))
+  ), 
+  bordered = TRUE,
+  highlight = TRUE
+)
+```
+
+</details>
+
+Ultimately, 8,256 PLZs were matched to the 299 electoral districts, with 91 postal codes spread across 2 electoral districts, and 2 spread across 3 electoral districts. 
+
+### ESF Objectives
+
+### Geographic Information
+
+## Data Sources
+
+### European Social Funds+
+
+* North-Rhine Westphalia, `.xlsx` [[Ministerium für Arbeit, Gesundheit und Soziales](https://www.mags.nrw/system/files/media/document/file/esf_2021-2027_liste_der_vorhaben.xlsx), as of 31.12.2023] 
+
+### Geocoding
+
+* Postleitzahl Shapefile, `.geoJSON` [[Postleitzahlen Deutschland](https://downloads.suche-postleitzahl.org/v2/public/plz-5stellig.geojson), as of 15.07.2023]^[[Open Database License](https://www.openstreetmap.org/copyright)]
+* Bundestag Constituency Shapefile, `.geoJSON` [[Bundeswahlleiter](https://www.bundeswahlleiterin.de/en/dam/jcr/f0ce06a7-188c-4ef3-b49b-5a66719d2b46/btw21_geometrie_wahlkreise_vg250_shp.zip), as of 15.04.2020]
+* Bundestag Constituency Names, `.csv` [[Bundeswahlleiter](https://www.bundeswahlleiterin.de/dam/jcr/b46e4c9d-290c-4b96-a64b-0edee1c780a5/btw21_wahlkreisnamen_utf8.csv), as of 15.04.2020]
 
