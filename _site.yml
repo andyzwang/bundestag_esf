@@ -8,41 +8,41 @@ navbar:
     - text: "Bundesprogramme"
       menu:
         - text: "BMBF"
-          href: data.html
+          href: index.html
     - text: "Länderprogramme"
       menu:
         - text: "Baden-Württemberg"
-          href: data.html
+          href: index.html
         - text: "Bayern"
-          href: data.html
+          href: index.html
         - text: "Berlin"
-          href: data.html
+          href: index.html
         - text: "Brandenburg"
-          href: data.html
+          href: index.html
         - text: "Bremen"
-          href: data.html
+          href: index.html
         - text: "Hamburg"
-          href: data.html
+          href: index.html
         - text: "Hesse"
-          href: data.html
+          href: index.html
         - text: "Mecklenburg-Vorpommern"
-          href: data.html
+          href: index.html
         - text: "Niedersachsen"
-          href: data.html
-        - text: "Nordrhein Westfalen"
+          href: index.html
+        - text: "Nordrhein-Westfalen"
           href: nrw.html
         - text: "Rhineland-Pfalz"
-          href: data.html
+          href: index.html
         - text: "Saarland"
-          href: data.html
+          href: index.html
         - text: "Saxon"
-          href: data.html
+          href: index.html
         - text: "Saxon-Anhalt"
-          href: data.html
+          href: index.html
         - text: "Schleswig-Holstein"
-          href: data.html
+          href: index.html
         - text: "Thüringen"
-          href: data.html
+          href: index.html
   right:
     - text: "Daten und Methodik"
       href: data.html
