@@ -9,7 +9,7 @@ library(tidyverse)
 library(readxl)
 library(janitor)
 
-bridge <- readRDS("output_data/plz_wkr_bridge.rds")
+bridge <- readRDS("output/geo/plz_wkr_bridge.rds")
 ```
 
 The European Social Fund Plus (ESF+) is the European Union (EU)’s main instrument for investing in people and supporting the implementation of the European Pillar of Social Rights. With a budget of €142.7 billion for the period 2021-2027, the ESF+ will continue to provide an important contribution to the EU’s employment, social, education and skills policies, including structural reforms in these areas [[European Commission](https://european-social-fund-plus.ec.europa.eu/en/what-esf)].
@@ -35,7 +35,7 @@ nrw_col_types <- c(
   "numeric"
 )
 
-nrw <- read_xlsx("raw_data/federal_states/NRW.xlsx", skip = 1, col_types = nrw_col_types) %>%
+nrw <- read_xlsx("raw/federal_states/NRW.xlsx", skip = 1, col_types = nrw_col_types) %>%
   clean_names() %>%
   filter(
     country == "DE"
@@ -64,7 +64,5 @@ nrw_wk <- nrw %>%
 nrw_wk_display <- nrw_wk %>%
   group_by(land_name, wkr_nr, wkr_name) %>%
   summarize(funds = sum(cost))
-
-write.xlsx(nrw_wk, "nrw.xlsx")
 
 ```

@@ -26,7 +26,7 @@ While the Federal Statistical Office publishes a crosswalk between electoral dis
 Open-source and publicly available [PLZ and BWK GeoJSON files](#geocoding) was used to create a bridge between the two. The R package `sf` was used to compare the boundaries of these two layers.
 
 <details>
-  <summary>PLZ-BWK Crosswalk R Code [[GitHub](https://github.com/andyzwang/bundestag_esf/blob/main/coding/geomatching.R)]</summary>
+  <summary>PLZ-BWK Crosswalk R Code [[Live](scripts/geo/plz_bwk_crosswalk.R)]</summary>
   ```r
   library(sf)
   library(dplyr)
@@ -36,7 +36,7 @@ Open-source and publicly available [PLZ and BWK GeoJSON files](#geocoding) was u
   
   ## DATA IMPORT
   # Load PLZ shapefiles
-  plz <- st_read("raw_data/shape_files/plz5.geojson") %>%
+  plz <- st_read("raw/shape_files/plz5.geojson") %>%
     clean_names() %>%
     select(plz, note, everything()) %>%
     rename(
@@ -53,11 +53,11 @@ Open-source and publicly available [PLZ and BWK GeoJSON files](#geocoding) was u
     )
   
   # Load wahlkreis names
-  wk_namen <- read.csv("raw_data/wahlkreisnamen.csv", skip = 7) %>%
+  wk_namen <- read.csv("raw/wahlkreisnamen.csv", skip = 7) %>%
     select(-LAND_NR, -LAND_ABK)
   
   # Load BWK data
-  bwk <- st_read("raw_data/shape_files/wkr.json") %>%
+  bwk <- st_read("raw/shape_files/wkr.json") %>%
     select(WKR_NR, LAND_NR) %>%
     inner_join(wk_namen, by = c("WKR_NR")) %>%
     clean_names() %>%
@@ -159,18 +159,18 @@ Open-source and publicly available [PLZ and BWK GeoJSON files](#geocoding) was u
   
   # tada!!
   library(openxlsx)
-  write.xlsx(final_df, "output_data/plz_wkr_bridge.xlsx")
-  write.csv(final_df, "output_data/plz_wkr_bridge.csv", fileEncoding = "UTF-8")
-  saveRDS(final_df, file = "output_data/plz_wkr_bridge.rds")
+  write.xlsx(final_df, "output/geo/plz_wkr_bridge.xlsx")
+  write.csv(final_df, "output/geo/plz_wkr_bridge.csv", fileEncoding = "UTF-8")
+  saveRDS(final_df, file = "output_data/geo/plz_wkr_bridge.rds")
   ```
 </details>
 
-2,815 PLZ are contained solely within one electoral district. The remaining PLZs were compared pairwise with all electoral districts for spatial overlap, with 12,119 PLZ-BWK pairs. A threshold of 25% PLZ coverage was set for each PLZ-BWK pair based on a threshold analysis.^[Notably, more than 6,000 pairs were dropped from the table when a threshold of 1% spatial coverage was set.] 
+2,815 PLZ are contained solely within one electoral district. The remaining PLZs were compared pairwise with all electoral districts for spatial overlap, with 12,119 PLZ-BWK pairs. A threshold of 25% PLZ coverage was set for each PLZ-BWK pair based on a threshold analysis.^[Notably, more than 6,000 pairs were dropped from the table when a trivial threshold of 1% spatial coverage was set.] 
 
 <details>
   <summary> PLZ-BWK Treshold Table </summary>
 ```{r threshold, print= TRUE}
-sig_table <- readRDS("output_data/sig_table.rds")
+sig_table <- readRDS("output/sig_table.rds")
 reactable(sig_table,
   defaultColDef = colDef(
     align = "center",
@@ -187,7 +187,7 @@ reactable(sig_table,
 
 </details>
 
-Ultimately, 8,256 PLZs were matched to the 299 electoral districts, with 91 postal codes spread across 2 electoral districts, and 2 spread across 3 electoral districts. 
+Ultimately, 8,256 PLZs were matched to the 299 electoral districts, with 91 postal codes spread across 2 electoral districts, and 2 spread across 3 electoral districts [[`CSV`]("output_data/plz_wkr_bridge.csv")][[`RData`]("output_data/plz_wkr_bridge.rds")][[`XLSX`]("output_data/plz_wkr_bridge.xlsx")]. 
 
 ### ESF Objectives
 
@@ -197,11 +197,10 @@ Ultimately, 8,256 PLZs were matched to the 299 electoral districts, with 91 post
 
 ### European Social Funds+
 
-* North-Rhine Westphalia, `.xlsx` [[Ministerium für Arbeit, Gesundheit und Soziales](https://www.mags.nrw/system/files/media/document/file/esf_2021-2027_liste_der_vorhaben.xlsx), as of 31.12.2023] 
+* North-Rhine Westphalia [[`XLSX`](https://www.mags.nrw/system/files/media/document/file/esf_2021-2027_liste_der_vorhaben.xlsx)]: Ministerium für Arbeit, Gesundheit und Soziales, 31.12.2023. 
 
 ### Geocoding
 
-* Postleitzahl Shapefile, `.geoJSON` [[Postleitzahlen Deutschland](https://downloads.suche-postleitzahl.org/v2/public/plz-5stellig.geojson), as of 15.07.2023]^[[Open Database License](https://www.openstreetmap.org/copyright)]
-* Bundestag Constituency Shapefile, `.geoJSON` [[Bundeswahlleiter](https://www.bundeswahlleiterin.de/en/dam/jcr/f0ce06a7-188c-4ef3-b49b-5a66719d2b46/btw21_geometrie_wahlkreise_vg250_shp.zip), as of 15.04.2020]
-* Bundestag Constituency Names, `.csv` [[Bundeswahlleiter](https://www.bundeswahlleiterin.de/dam/jcr/b46e4c9d-290c-4b96-a64b-0edee1c780a5/btw21_wahlkreisnamen_utf8.csv), as of 15.04.2020]
-
+* Postleitzahl Shapefile [[`GeoJSON`](https://downloads.suche-postleitzahl.org/v2/public/plz-5stellig.geojson)]: Postleitzahlen Deutschland, 15.7.2023.^[[Open Database License](https://www.openstreetmap.org/copyright)]
+* Bundestag Constituency Shapefile [[`GeoJSON`](https://www.bundeswahlleiterin.de/en/dam/jcr/f0ce06a7-188c-4ef3-b49b-5a66719d2b46/btw21_geometrie_wahlkreise_vg250_shp.zip)]: Bundeswahlleiter, 15.04.2020.
+* Bundestag Constituency Names [[`CSV`](https://www.bundeswahlleiterin.de/dam/jcr/b46e4c9d-290c-4b96-a64b-0edee1c780a5/btw21_wahlkreisnamen_utf8.csv)]: Bundeswahlleiter, 15.04.2020.

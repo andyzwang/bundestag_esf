@@ -20,7 +20,7 @@ library(janitor)
 
 ## DATA IMPORT
 # Load PLZ shapefiles
-plz <- st_read("raw_data/shape_files/plz5.geojson") %>%
+plz <- st_read("raw/shape_files/plz5.geojson") %>%
   clean_names() %>%
   select(plz, note, everything()) %>%
   rename(
@@ -37,11 +37,11 @@ plz <- st_read("raw_data/shape_files/plz5.geojson") %>%
   )
 
 # Load Wahlkreis names
-wk_namen <- read.csv("raw_data/wahlkreisnamen.csv", skip = 7) %>%
+wk_namen <- read.csv("raw/wahlkreisnamen.csv", skip = 7) %>%
   select(-LAND_NR, -LAND_ABK)
 
 # Load BWK data
-bwk <- st_read("raw_data/shape_files/wkr.json") %>%
+bwk <- st_read("raw/shape_files/wkr.json") %>%
   select(WKR_NR, LAND_NR) %>%
   inner_join(wk_namen, by = c("WKR_NR")) %>%
   clean_names() %>%
@@ -146,6 +146,6 @@ row.names(final_df) <- NULL
 
 # tada!!
 library(openxlsx)
-write.xlsx(final_df, "output_data/plz_wkr_bridge.xlsx")
-write.csv(final_df, "output_data/plz_wkr_bridge.csv", fileEncoding = "UTF-8")
-saveRDS(final_df, file = "output_data/plz_wkr_bridge.rds")
+write.xlsx(final_df, "output/geo/plz_wkr_bridge.xlsx")
+write.csv(final_df, "output/geo/plz_wkr_bridge.csv", fileEncoding = "UTF-8")
+saveRDS(final_df, file = "output/geo/plz_wkr_bridge.rds")

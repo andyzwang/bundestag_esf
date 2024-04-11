@@ -2502,7 +2502,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p>Open-source and publicly available <a href="#geocoding">PLZ and BWK GeoJSON files</a> was used to create a bridge between the two. The R package <code>sf</code> was used to compare the boundaries of these two layers.</p>
 <details>
 <summary>
-PLZ-BWK Crosswalk R Code [<a href="https://github.com/andyzwang/bundestag_esf/blob/main/coding/geomatching.R">GitHub</a>]
+PLZ-BWK Crosswalk R Code [<a href="scripts/geo/plz_bwk_crosswalk.R">Live</a>]
 </summary>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(sf)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(dplyr)</span>
@@ -2512,7 +2512,7 @@ PLZ-BWK Crosswalk R Code [<a href="https://github.com/andyzwang/bundestag_esf/bl
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="do">## DATA IMPORT</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Load PLZ shapefiles</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  plz <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">&quot;raw_data/shape_files/plz5.geojson&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  plz <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">&quot;raw/shape_files/plz5.geojson&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(plz, note, <span class="fu">everything</span>()) <span class="sc">%&gt;%</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(</span>
@@ -2529,11 +2529,11 @@ PLZ-BWK Crosswalk R Code [<a href="https://github.com/andyzwang/bundestag_esf/bl
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Load wahlkreis names</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  wk_namen <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;raw_data/wahlkreisnamen.csv&quot;</span>, <span class="at">skip =</span> <span class="dv">7</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  wk_namen <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;raw/wahlkreisnamen.csv&quot;</span>, <span class="at">skip =</span> <span class="dv">7</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>LAND_NR, <span class="sc">-</span>LAND_ABK)</span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Load BWK data</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  bwk <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">&quot;raw_data/shape_files/wkr.json&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  bwk <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">&quot;raw/shape_files/wkr.json&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(WKR_NR, LAND_NR) <span class="sc">%&gt;%</span></span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(wk_namen, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;WKR_NR&quot;</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span></span>
@@ -2635,9 +2635,9 @@ PLZ-BWK Crosswalk R Code [<a href="https://github.com/andyzwang/bundestag_esf/bl
 <span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a>  <span class="co"># tada!!</span></span>
 <span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(openxlsx)</span>
-<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.xlsx</span>(final_df, <span class="st">&quot;output_data/plz_wkr_bridge.xlsx&quot;</span>)</span>
-<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.csv</span>(final_df, <span class="st">&quot;output_data/plz_wkr_bridge.csv&quot;</span>, <span class="at">fileEncoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
-<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(final_df, <span class="at">file =</span> <span class="st">&quot;output_data/plz_wkr_bridge.rds&quot;</span>)</span></code></pre></div>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.xlsx</span>(final_df, <span class="st">&quot;output/geo/plz_wkr_bridge.xlsx&quot;</span>)</span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.csv</span>(final_df, <span class="st">&quot;output/geo/plz_wkr_bridge.csv&quot;</span>, <span class="at">fileEncoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(final_df, <span class="at">file =</span> <span class="st">&quot;output_data/geo/plz_wkr_bridge.rds&quot;</span>)</span></code></pre></div>
 </details>
 <p>2,815 PLZ are contained solely within one electoral district. The remaining PLZs were compared pairwise with all electoral districts for spatial overlap, with 12,119 PLZ-BWK pairs. A threshold of 25% PLZ coverage was set for each PLZ-BWK pair based on a threshold analysis.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <details>
@@ -2645,22 +2645,23 @@ PLZ-BWK Crosswalk R Code [<a href="https://github.com/andyzwang/bundestag_esf/bl
 PLZ-BWK Treshold Table
 </summary>
 <div class="layout-chunk" data-layout="l-body">
-<div class="reactable html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-f9ac498c9c9dcc1827cf" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-f9ac498c9c9dcc1827cf">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"tolerance":[0,0.01,0.05,0.1,0.15,0.2,0.25,0.33,0.4,0.5],"nrows":[12119,6067,5566,5492,5455,5434,5411,5376,5349,5313]},"columns":[{"id":"tolerance","name":"Tolerance","type":"numeric","align":"center","headerStyle":{"background":"#f7f7f8"},"format":{"cell":{"digits":0,"percent":true},"aggregated":{"digits":0,"percent":true}}},{"id":"nrows","name":"PLZ-BWK Pairs","type":"list","align":"center","headerStyle":{"background":"#f7f7f8"},"format":{"cell":{"separators":true},"aggregated":{"separators":true}}}],"highlight":true,"bordered":true,"dataKey":"cf6676c00d557926ce47a28c2cba443e"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-a7527fc01341b7f20640" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-a7527fc01341b7f20640">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"tolerance":[0,0.01,0.05,0.1,0.15,0.2,0.25,0.33,0.4,0.5],"nrows":[12119,6067,5566,5492,5455,5434,5411,5376,5349,5313]},"columns":[{"id":"tolerance","name":"Tolerance","type":"numeric","align":"center","headerStyle":{"background":"#f7f7f8"},"format":{"cell":{"digits":0,"percent":true},"aggregated":{"digits":0,"percent":true}}},{"id":"nrows","name":"PLZ-BWK Pairs","type":"list","align":"center","headerStyle":{"background":"#f7f7f8"},"format":{"cell":{"separators":true},"aggregated":{"separators":true}}}],"highlight":true,"bordered":true,"dataKey":"cf6676c00d557926ce47a28c2cba443e"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 </details>
+<p>Ultimately, 8,256 PLZs were matched to the 299 electoral districts, with 91 postal codes spread across 2 electoral districts, and 2 spread across 3 electoral districts [<a href="%22output_data/plz_wkr_bridge.csv%22"><code>CSV</code></a>][<a href="%22output_data/plz_wkr_bridge.rds%22"><code>RData</code></a>][<a href="%22output_data/plz_wkr_bridge.xlsx%22"><code>XLSX</code></a>].</p>
 <h3 id="esf-objectives">ESF Objectives</h3>
 <h3 id="geographic-information">Geographic Information</h3>
 <h2 id="data-sources">Data Sources</h2>
 <h3 id="european-social-funds">European Social Funds+</h3>
 <ul>
-<li>North-Rhine Westphalia, <code>.xlsx</code> [<a href="https://www.mags.nrw/system/files/media/document/file/esf_2021-2027_liste_der_vorhaben.xlsx">Ministerium für Arbeit, Gesundheit und Soziales</a>, as of 31.12.2023]</li>
+<li>North-Rhine Westphalia [<a href="https://www.mags.nrw/system/files/media/document/file/esf_2021-2027_liste_der_vorhaben.xlsx"><code>XLSX</code></a>]: Ministerium für Arbeit, Gesundheit und Soziales, 31.12.2023.</li>
 </ul>
 <h3 id="geocoding">Geocoding</h3>
 <ul>
-<li>Postleitzahl Shapefile, <code>.geoJSON</code> [<a href="https://downloads.suche-postleitzahl.org/v2/public/plz-5stellig.geojson">Postleitzahlen Deutschland</a>, as of 15.07.2023]<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></li>
-<li>Bundestag Constituency Shapefile, <code>.geoJSON</code> [<a href="https://www.bundeswahlleiterin.de/en/dam/jcr/f0ce06a7-188c-4ef3-b49b-5a66719d2b46/btw21_geometrie_wahlkreise_vg250_shp.zip">Bundeswahlleiter</a>, as of 15.04.2020]</li>
-<li>Bundestag Constituency Names, <code>.csv</code> [<a href="https://www.bundeswahlleiterin.de/dam/jcr/b46e4c9d-290c-4b96-a64b-0edee1c780a5/btw21_wahlkreisnamen_utf8.csv">Bundeswahlleiter</a>, as of 15.04.2020]</li>
+<li>Postleitzahl Shapefile [<a href="https://downloads.suche-postleitzahl.org/v2/public/plz-5stellig.geojson"><code>GeoJSON</code></a>]: Postleitzahlen Deutschland, 15.7.2023.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></li>
+<li>Bundestag Constituency Shapefile [<a href="https://www.bundeswahlleiterin.de/en/dam/jcr/f0ce06a7-188c-4ef3-b49b-5a66719d2b46/btw21_geometrie_wahlkreise_vg250_shp.zip"><code>GeoJSON</code></a>]: Bundeswahlleiter, 15.04.2020.</li>
+<li>Bundestag Constituency Names [<a href="https://www.bundeswahlleiterin.de/dam/jcr/b46e4c9d-290c-4b96-a64b-0edee1c780a5/btw21_wahlkreisnamen_utf8.csv"><code>CSV</code></a>]: Bundeswahlleiter, 15.04.2020.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
@@ -2668,7 +2669,7 @@ PLZ-BWK Treshold Table
 <ol>
 <li id="fn1"><p><a href="https://www.destatis.de/DE/Themen/Laender-Regionen/Regionales/Gemeindeverzeichnis/Administrativ/Archiv/GVAuszugQ/BTW20214Q2020.html">Statistisches Bundesamt</a>, as of 7.1.2021<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>“Aus lizenzrechtlichen Gründen darf das Statistische Bundesamt das vollständige Postleitzahlenverzeichnis (Urheber ist die Deutsche Post AG mit dem Produkt DATAFACTORY STREETCODE) nicht verbreiten. Der Lizenzvertrag mit der deutschen Post gestattet uns Auswertungen ausschließlich für interne Zwecke. Ohnehin ist jedoch eine Zuordnung von Postleitzahlen und Wahlkreisen in vielen Fällen nicht eindeutig möglich, da die Postleitzahlengebiete üblicherweise nicht entlang der Wahlkreisgrenzen verlaufen. Darüber hinaus liegt uns als kleinste systematisierte Gebietseinheit bei der Wahlkreiseinteilung die Gemeinde als Ganzes vor. Bei Gemeinden, die durch mehrere Wahlkreise ‘geteilt’ sind, fehlt uns eine weitere Differenzierung (z.B. nach Stadtteil, Bezirk, Straße), so dass hier ebenso eine eindeutige Zuordnung der Postleitzahlen nicht möglich ist” [<a href="https://fragdenstaat.de/anfrage/veroffentlichung-einer-vollstandigen-liste-von-postleitzahlen-und-den-zugehorigen-wahlkreisen/">FragDenStaat</a>, 26.2.2021].<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Notably, more than 6,000 pairs were dropped from the table when a threshold of 1% spatial coverage was set.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Notably, more than 6,000 pairs were dropped from the table when a trivial threshold of 1% spatial coverage was set.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p><a href="https://www.openstreetmap.org/copyright">Open Database License</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
