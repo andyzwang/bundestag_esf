@@ -76,4 +76,6 @@ nrw_wk <- nrw %>%
 nrw_wk_display <- nrw_wk %>%
   group_by(land_name, wkr_nr, wkr_name) %>%
   summarize(funds = sum(cost))
+
+
 ```
