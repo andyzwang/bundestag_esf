@@ -8,7 +8,6 @@ library(ggplot2)
 library(tidyverse)
 library(readxl)
 library(janitor)
-
 bridge <- readRDS("output/geo/plz_wkr_bridge.rds")
 ```
 
@@ -18,22 +17,7 @@ The European Social Fund Plus (ESF+) is the European Union (EU)’s main instrum
 ## North Rhine Westphalia
 
 ```{r nrw, warning=FALSE}
-nrw_col_types <- c(
-  "text",
-  "text",
-  "text",
-  "date",
-  "date",
-  "numeric",
-  "text",
-  "text",
-  "text",
-  "text",
-  "text",
-  "text",
-  "numeric",
-  "numeric"
-)
+
 
 nrw <- read_xlsx("raw/federal_states/NRW.xlsx", skip = 1, col_types = nrw_col_types) %>%
   clean_names() %>%

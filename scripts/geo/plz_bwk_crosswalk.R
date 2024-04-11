@@ -119,7 +119,7 @@ sig_table <- tibble(
 )
 sig_table$nrows <- map(sig_table$tolerance, nrows_partial)
 
-saveRDS(sig_table, file = "output_data/sig_table.rds")
+saveRDS(sig_table, file = "output/sig_table.rds")
 
 # apply tolerance
 partial_matches <- partial_matches %>%
@@ -139,7 +139,12 @@ repeat_num <- partial_matches[c("plz", "wkr_nr")] %>%
 final_df <- rbind(rbind(full_contains, partial_matches), augsburg_oddity) %>%
   filter(!is.na(plz)) %>%
   arrange(plz) %>%
-  select(plz, plz_name, wkr_nr, wkr_name, land_nr, land_name, plz_einwohner, plz_qkm, wk_pct)
+  mutate(
+    wk_mult = if_else(wk_pct < .75, 1, 0),
+    wk_pct = round(wk_pct, digits = 2)
+      ) %>%
+  select(plz, plz_name, wkr_nr, wkr_name, wk_pct, wk_mult, 
+         land_nr, land_name)
 
 # reset row names
 row.names(final_df) <- NULL
