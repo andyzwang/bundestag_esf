@@ -5,3 +5,5 @@
 *.geojson
 .DS_Store
 *.Rproj
+raw/.DS_Store
+docs/output/.DS_Store
